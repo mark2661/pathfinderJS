@@ -1,8 +1,9 @@
 <html>
     <script type="text/javascript" src = "GUI.js"></script>
-    <script type="text/javascript" src = "GridGUI.js"></script>
+    <script type="text/javascript" src = "GridGui.js"></script>
     <script type="text/javascript" src = "Grid.js"></script>
     <script type="text/javascript" src = "Search_Solutions.js"></script>
+    <script type="text/javascript" src = "settings.js"></script>
 
     <head>
             <style>
@@ -23,6 +24,12 @@
     </head>
 
     <script>
+    function isMouseCursorOnCanvas(mouseX, mouseY, canvas) {
+        let canvasDimensions = canvas.getBoundingClientRect();
+
+        return mouseX >= canvasDimensions.left && mouseX <= canvasDimensions.right && mouseY >= canvasDimensions.top && mouseY <= canvasDimensions.bottom
+    }
+
     init = function() {
 
         let gui = new GridGUI(document.getElementById("container"), document.getElementById("defaultmap").value);
@@ -32,6 +39,16 @@
         function update() {
             gui.draw();
         }
+
+        document.addEventListener('mousemove', (event) => {
+            let mouseX = event.pageX;
+            let mouseY = event.pageY;
+            
+            let gridDim = gui.canvas.getBoundingClientRect();
+            if (isMouseCursorOnCanvas(mouseX, mouseY, gui.canvas)) {
+                gui.grid.set(mouseX - gridDim.left, mouseY - gridDim.top, 3);
+            }
+        })
     }
     </script>
 
@@ -39,7 +56,21 @@
         <div id="container"></div>
 
         <!-- 20 wide 10 high -->
-        <textarea id="blankmap" style="display: none;">
+        <textarea id="defaultmap" style="display: none;">
+            20000002222222222222 
+            22222222222222222222 
+            22222222222222211222 
+            22222222222222211222 
+            22222222222222211222 
+            22222222222222211222 
+            22222221111111111222 
+            22222221111111111222 
+            22222222222222222222 
+            22222222222222222224 
+            22222222222222222222 
+            22222222222222222222 
+            22222222222222222222 
+            22222222222222222222 
             22222222222222222222 
             22222222222222222222 
             22222222222222222222 
