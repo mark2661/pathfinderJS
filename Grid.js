@@ -11,6 +11,7 @@ class Grid {
         this.width = formattedMapDataArray[0].length;
         this.maxSize = 3;
         this.grid = Grid.createGridObject(formattedMapDataArray);
+        this.currentHoverCellKey = null;
     }
 
     static createGridObject(mapData) {
@@ -19,25 +20,57 @@ class Grid {
         for (let y=0; y<mapData.length; y++) {
             for (let x=0; x<mapData[0].length; x++) {
                let key = `${y},${x}`; 
-               grid[key] = parseInt(mapData[y][x], 10);
+               grid[key] = {
+                "value" : parseInt(mapData[y][x], 10),
+                "hover" : false,
+                "baseValue" : parseInt(mapData[y][x], 10)
+               };
             }
         }
         return grid;
     }
 
+    static getGlobalMouseToGridReferenceCoords(mouseX, mouseY) {
+        let gridX = Math.floor(mouseX / settings.grid_cell_width);
+        let gridY = Math.floor(mouseY / settings.grid_cell_height);
+
+        return {"x": gridX, "y": gridY};
+    }
+
     get(x, y) {
-        let key = `${y},${x}`; 
+        let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(x, y);
+        let key = `${gridReferenceCoords.y},${gridReferenceCoords.x}`; 
         return (key in this.grid) ? this.grid[key] : null;
     }
 
-    set(x, y, val) {
-        let gridX = Math.floor(x / settings.grid_cell_width);
-        let gridY = Math.floor(y / settings.grid_cell_height);
-        // console.log(`mX: ${x}, mY: ${y}, X: ${gridX}, Y: ${gridY}`)
-        let key = `${gridY},${gridX}`; 
+    setValue(x, y, val) {
+        let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(x, y);
+        let key = `${gridReferenceCoords.y},${gridReferenceCoords.x}`; 
         if (key in this.grid)
         {
-            this.grid[key] = val
+            this.grid[key] = {...this.grid[key],
+               "value" : val
+            }
+        }
+    }
+
+    setHover(x, y , hoverVal) {
+        let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(x, y);
+        let key = `${gridReferenceCoords.y},${gridReferenceCoords.x}`; 
+        if (key in this.grid)
+        {
+            // deselect current active hover cell
+            if (this.currentHoverCellKey !== null){
+                this.grid[this.currentHoverCellKey].hover = false;
+                this.grid[this.currentHoverCellKey].value = this.grid[this.currentHoverCellKey].baseValue
+            }
+
+            // assign new active hover cell
+            this.currentHoverCellKey = key;
+            this.grid[key] = {...this.grid[key],
+               "hover" : hoverVal
+            }
+            this.grid[key].value = 3; // 3 = white colour
         }
     }
 

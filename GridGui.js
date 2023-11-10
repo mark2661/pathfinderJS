@@ -16,7 +16,7 @@ class GridGUI {
 
     draw() {
         for (let key in this.grid.grid) {
-            let cell = this.grid.grid[key];
+            let cell = this.grid.grid[key].value;
             let gridCellY = parseInt(key.split(",")[0], 10);
             let gridCellX = parseInt(key.split(",")[1], 10);
             // set grid cell colour

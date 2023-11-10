@@ -46,7 +46,8 @@
             
             let gridDim = gui.canvas.getBoundingClientRect();
             if (isMouseCursorOnCanvas(mouseX, mouseY, gui.canvas)) {
-                gui.grid.set(mouseX - gridDim.left, mouseY - gridDim.top, 3);
+                offsetAdjustedMouseCoords = {"x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top)}
+                gui.grid.setHover(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y, true)
             }
         })
     }
