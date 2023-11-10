@@ -1,26 +1,28 @@
 class Grid {
     constructor(mapText) {
-        let temp = mapText.split("\n");
+        // remove trailing whitespace from mapText
+        let formattedMapDataArray = mapText.split("\n").map((row) => {
+            return row.trim();
+        }).filter((row) => {
+            return row !== "";
+        });
 
-        // remove trailing white space from input map array
-        for (let r=0; r < temp.length; r++){
-            let row = temp[r];
-            temp[r] = row.trim();
-        }
-        temp.pop();
-
-        this.height = temp.length;
-        this.width = temp[0].length;
+        this.height = formattedMapDataArray.length;
+        this.width = formattedMapDataArray[0].length;
         this.maxSize = 3;
+        this.grid = Grid.createGridObject(formattedMapDataArray);
+    }
 
-        // create grid object -> key = (y,x) coord (string), value = number from mapText (number type)
-        this.grid = {};
-        for (let y=0; y<temp.length; y++) {
-            for (let x=0; x<temp[0].length; x++) {
+    static createGridObject(mapData) {
+        // key = (y,x) coord (string), value = number from mapText (number type)
+        let grid = {};
+        for (let y=0; y<mapData.length; y++) {
+            for (let x=0; x<mapData[0].length; x++) {
                let key = `${y},${x}`; 
-               this.grid[key] = parseInt(temp[y][x], 10);
+               grid[key] = parseInt(mapData[y][x], 10);
             }
         }
+        return grid;
     }
 
     get(x, y) {
