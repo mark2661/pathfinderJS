@@ -43,6 +43,7 @@ class GridGUI {
         }
 
         this.drawGridLines();
+        this.drawText();
     }
 
     drawGridLines() {
@@ -66,6 +67,13 @@ class GridGUI {
                this.canvas_ctx.lineTo(globalCellTopLeftCoordX, this.canvas.height);
                this.canvas_ctx.stroke();
         }
+    }
+
+    drawText() {
+        let canvasLeftEdgeOffset = 10;
+        let canvasBottomEdgeOffset = this.canvas.height - 20;
+        this.canvas_ctx.font = "bold 24px serif";
+        this.canvas_ctx.fillText(`Mouse Pos: (${this.grid.currentHoverCellKey})`, canvasLeftEdgeOffset, canvasBottomEdgeOffset);
     }
 
 }
