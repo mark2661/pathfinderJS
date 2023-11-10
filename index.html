@@ -27,7 +27,7 @@
     function isMouseCursorOnCanvas(mouseX, mouseY, canvas) {
         let canvasDimensions = canvas.getBoundingClientRect();
 
-        return mouseX >= canvasDimensions.left && mouseX <= canvasDimensions.right && mouseY >= canvasDimensions.top && mouseY <= canvasDimensions.bottom
+        return mouseX > canvasDimensions.left && mouseX < canvasDimensions.right && mouseY > canvasDimensions.top && mouseY < canvasDimensions.bottom
     }
 
     init = function() {

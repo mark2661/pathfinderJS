@@ -9,28 +9,34 @@ class Grid {
         }
         temp.pop();
 
-        this.grid = [];
-        // convert strings data to numbers
-        for (let row of temp) {
-            this.grid.push(row.split("").map((c) => {
-                return parseInt(c, 10);
-            }))
-        }
-
-        this.height = this.grid.length;
-        this.width = this.grid[0].length;
+        this.height = temp.length;
+        this.width = temp[0].length;
         this.maxSize = 3;
+
+        // create grid object -> key = (y,x) coord (string), value = number from mapText (number type)
+        this.grid = {};
+        for (let y=0; y<temp.length; y++) {
+            for (let x=0; x<temp[0].length; x++) {
+               let key = `${y},${x}`; 
+               this.grid[key] = parseInt(temp[y][x], 10);
+            }
+        }
     }
 
     get(x, y) {
-        return this.grid[y][x];
+        let key = `${y},${x}`; 
+        return (key in this.grid) ? this.grid[key] : null;
     }
 
     set(x, y, val) {
         let gridX = Math.floor(x / settings.grid_cell_width);
         let gridY = Math.floor(y / settings.grid_cell_height);
         // console.log(`mX: ${x}, mY: ${y}, X: ${gridX}, Y: ${gridY}`)
-        this.grid[gridY][gridX] = val
+        let key = `${gridY},${gridX}`; 
+        if (key in this.grid)
+        {
+            this.grid[key] = val
+        }
     }
 
     isOOB(x, y, size=1) {
