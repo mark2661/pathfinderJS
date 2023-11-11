@@ -21,16 +21,16 @@ class GridGUI {
             let gridCellX = parseInt(key.split(",")[1], 10);
             // set grid cell colour
             switch (cell) {
-                case 0:
+                case BLUE_COLOUR:
                     this.canvas_ctx.fillStyle = "blue";
                     break;
-                case 1:
+                case GREEN_COLOUR:
                     this.canvas_ctx.fillStyle = "green";
                     break;
-                case 2:
+                case RED_COLOUR:
                     this.canvas_ctx.fillStyle = "red";
                     break;
-                case 3:
+                case WHITE_COLOUR:
                     this.canvas_ctx.fillStyle = "white";
                     break;
                 default:

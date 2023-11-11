@@ -70,7 +70,7 @@ class Grid {
             this.grid[key] = {...this.grid[key],
                "hover" : hoverVal
             }
-            this.grid[key].value = 3; // 3 = white colour
+            this.grid[key].value = WHITE_COLOUR; // 3 = white colour
         }
     }
 
