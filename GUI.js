@@ -10,77 +10,60 @@ class GUI {
             menuContainer.appendChild(lineBreakElement);
         }
 
-        // TODO: Refactor these helper functions
-        function createEnvironmentMapSelectList(options) {
+        function createSelectListElement(elementData, options) {
             // create environment select element and label
-            let environmentMapSelectElementLabel = document.createElement("label");
+            let selectElementLabel = document.createElement("label");
             let menuContainer = document.getElementById("menu-container");
-            let environmentMapSelectElement = document.createElement("select");
+            let selectElement = document.createElement("select");
 
-            environmentMapSelectElement.name = "map";
-            environmentMapSelectElement.id = "map-select";
-            environmentMapSelectElementLabel.innerHTML = "Environment Map:";
-            environmentMapSelectElementLabel.htmlFor = "map-select";
-            menuContainer.appendChild(environmentMapSelectElementLabel);
-            menuContainer.appendChild(environmentMapSelectElement);
+            selectElement.name = elementData.name;
+            selectElement.id = elementData.id;
+            selectElementLabel.innerHTML = `${elementData.label}:`;
+            selectElementLabel.htmlFor = elementData.id;
+            menuContainer.appendChild(selectElementLabel);
+            menuContainer.appendChild(selectElement);
 
             // add options to the select element
             for (let option of options) {
-                let environmentMapSelectOption = document.createElement("option");
-                environmentMapSelectOption.value = option;
-                environmentMapSelectOption.text = option;
-                environmentMapSelectElement.appendChild(environmentMapSelectOption);
+                let selectOption = document.createElement("option");
+                selectOption.value = option;
+                selectOption.text = option;
+                selectElement.appendChild(selectOption);
             }
+        }
+
+        // TODO: Refactor these helper functions
+        function createEnvironmentMapSelectList(options) {
+            let environmentMapSelectElementData = {
+                "name": "map",
+                "id": "map-select",
+                "label": "Environment Map"
+            }
+            createSelectListElement(environmentMapSelectElementData, options);
 
             // add line break to end of select menu
             addLineBreak();
         }
 
         function createSearchAlgorithmSelectList(options) {
-            // create environment select element and label
-            let searchAlgorithmSelectElementLabel = document.createElement("label");
-            let menuContainer = document.getElementById("menu-container");
-            let searchAlgorithmSelectElement = document.createElement("select");
-
-            searchAlgorithmSelectElement.name = "searchAlgorirhm";
-            searchAlgorithmSelectElement.id = "search-algorithm-select";
-            searchAlgorithmSelectElementLabel.innerHTML = "Search Algorithm:";
-            searchAlgorithmSelectElementLabel.htmlFor = "search-algorithm-select";
-            menuContainer.appendChild(searchAlgorithmSelectElementLabel);
-            menuContainer.appendChild(searchAlgorithmSelectElement);
-
-            // add options to the select element
-            for (let option of options) {
-                let searchAlgorithmSelectOption = document.createElement("option");
-                searchAlgorithmSelectOption.value = option;
-                searchAlgorithmSelectOption.text = option;
-                searchAlgorithmSelectElement.appendChild(searchAlgorithmSelectOption);
+            let searchAlgorirhmElementData = {
+                "name": "searchAlgorithm",
+                "id": "search-algorithm-select",
+                "label": "Search Algorithm"
             }
+            createSelectListElement(searchAlgorirhmElementData, options);
 
             // add line break to end of select menu
             addLineBreak();
         }
 
         function createGridCellSizeSelectList(options) {
-            // create environment select element and label
-            let gridCellSizeSelectElementLabel = document.createElement("label");
-            let menuContainer = document.getElementById("menu-container");
-            let gridCellSizeSelectElement = document.createElement("select");
-
-            gridCellSizeSelectElement.name = "gridCellSize";
-            gridCellSizeSelectElement.id = "grid-cell-size-select";
-            gridCellSizeSelectElementLabel.innerHTML = "Grid Cell Size:";
-            gridCellSizeSelectElementLabel.htmlFor = "grid-cell-size-select";
-            menuContainer.appendChild(gridCellSizeSelectElementLabel);
-            menuContainer.appendChild(gridCellSizeSelectElement);
-
-            // add options to the select element
-            for (let option of options) {
-                let gridCellSizeSelectOption = document.createElement("option");
-                gridCellSizeSelectOption.value = option;
-                gridCellSizeSelectOption.text = option;
-                gridCellSizeSelectElement.appendChild(gridCellSizeSelectOption);
+            let gridCellSizeElementData = {
+                "name": "gridCellSize",
+                "id": "grid-cell-size-select",
+                "label": "Grid Cell Size"
             }
+            createSelectListElement(gridCellSizeElementData, options);
 
             // add line break to end of select menu
             addLineBreak();
@@ -88,25 +71,12 @@ class GUI {
         }
 
         function createLegalActionsSelectList(options) {
-            // create environment select element and label
-            let legalActionsSelectElementLabel = document.createElement("label");
-            let menuContainer = document.getElementById("menu-container");
-            let legalActionsSelectElement = document.createElement("select");
-
-            legalActionsSelectElement.name = "legalActions";
-            legalActionsSelectElement.id = "legal-actions-select";
-            legalActionsSelectElementLabel.innerHTML = "Legal Actions:";
-            legalActionsSelectElementLabel.htmlFor = "legal-actions-select";
-            menuContainer.appendChild(legalActionsSelectElementLabel);
-            menuContainer.appendChild(legalActionsSelectElement);
-
-            // add options to the select element
-            for (let option of options) {
-                let legalActionsSelectOption = document.createElement("option");
-                legalActionsSelectOption.value = option;
-                legalActionsSelectOption.text = option;
-                legalActionsSelectElement.appendChild(legalActionsSelectOption);
+            let legalActionsElementData = {
+                "name": "legalActions",
+                "id": "legal-actions-select",
+                "label": "Legal Actions"
             }
+            createSelectListElement(legalActionsElementData, options);
 
             // add line break to end of select menu
             addLineBreak();
@@ -114,25 +84,12 @@ class GUI {
         }
 
         function createVisualisationSelectList(options) {
-            // create environment select element and label
-            let visualisationSelectElementLabel = document.createElement("label");
-            let menuContainer = document.getElementById("menu-container");
-            let visualisationSelectElement = document.createElement("select");
-
-            visualisationSelectElement.name = "visualisation";
-            visualisationSelectElement.id = "visualisation-select";
-            visualisationSelectElementLabel.innerHTML = "Visualisation:";
-            visualisationSelectElementLabel.htmlFor = "visualisation-select";
-            menuContainer.appendChild(visualisationSelectElementLabel);
-            menuContainer.appendChild(visualisationSelectElement);
-
-            // add options to the select element
-            for (let option of options) {
-                let visualisationSelectOption = document.createElement("option");
-                visualisationSelectOption.value = option;
-                visualisationSelectOption.text = option;
-                visualisationSelectElement.appendChild(visualisationSelectOption);
+            let visualisationElementData = {
+                "name": "visualisation",
+                "id": "visualisation-select",
+                "label": "Visualisation"
             }
+            createSelectListElement(visualisationElementData, options);
 
             // add line break to end of select menu
             addLineBreak();
