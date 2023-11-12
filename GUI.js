@@ -1,6 +1,8 @@
 class GUI {
     constructor() {
        this.createSelectMenus();
+       this.createButtons();
+       // TODO: add canvas to this class instead of index.html file
     }
 
     createSelectMenus() {
@@ -101,5 +103,46 @@ class GUI {
         createGridCellSizeSelectList(["Default (20 x 20)"]);
         createLegalActionsSelectList(["4 Cardinal (Up, Down, Left, Right)"])
         createVisualisationSelectList(["Instant Path + Open/Closed"])
+    }
+
+    createButtons() {
+        function createButton(buttonData) {
+            let menuContainer = document.getElementById("menu-container");
+            let buttonElement = document.createElement("button");
+            buttonElement.id = buttonData.id;
+            buttonElement.innerText = buttonData.text;
+            menuContainer.appendChild(buttonElement);
+        }
+
+        function createToggleGridButton() {
+            const toggleGridButtonData = {
+                "id": "toggle-grid-button",
+                "text": "Toggle Grid"
+            }
+
+            createButton(toggleGridButtonData);
+        }
+
+        function createRunButton() {
+            const runButtonData = {
+                "id": "run-button",
+                "text": "Run"
+            } 
+
+            createButton(runButtonData);
+        }
+
+        function createRunTestButton() {
+            const runTestButtonData = {
+                "id": "run-test-button",
+                "text": "Run Test"
+            } 
+
+            createButton(runTestButtonData);
+        }
+
+        createToggleGridButton();
+        createRunButton();
+        createRunTestButton();
     }
 }
