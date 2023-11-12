@@ -32,25 +32,24 @@
 
     init = function() {
 
-        //let gui = new GridGUI(document.getElementById("container"), document.getElementById("defaultmap").value);
+        let gui = new GUI(document.getElementById("defaultmap").value);
 
-        //// set up the main loop
-        //setInterval(update, 1000 / 60);
-        //function update() {
-        //    gui.draw();
-        //}
+        // set up the main loop
+        setInterval(update, 1000 / 60);
+        function update() {
+           gui.drawGrid();
+        }
 
-        //document.addEventListener('mousemove', (event) => {
-        //    let mouseX = event.pageX;
-        //    let mouseY = event.pageY;
-        //    
-        //    let gridDim = gui.canvas.getBoundingClientRect();
-        //    if (isMouseCursorOnCanvas(mouseX, mouseY, gui.canvas)) {
-        //        offsetAdjustedMouseCoords = {"x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top)}
-        //        gui.grid.setHover(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y, true)
-        //    }
-        //})
-        let gui = new GUI();
+        document.addEventListener('mousemove', (event) => {
+           let mouseX = event.pageX;
+           let mouseY = event.pageY;
+           
+           let gridDim = gui.getCanvas().getBoundingClientRect();
+           if (isMouseCursorOnCanvas(mouseX, mouseY, gui.getCanvas())) {
+               offsetAdjustedMouseCoords = {"x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top)}
+               gui.getGrid().setHover(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y, true)
+           }
+        })
     }
     </script>
 
