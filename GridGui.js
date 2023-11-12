@@ -43,7 +43,11 @@ class GridGUI {
         }
 
         this.drawGridLines();
-        this.drawText();
+
+        // only draw display text when cursor is hovering over a grid cell
+        if (this.grid.currentHoverCellKey !== null) {
+            this.drawText();
+        }
     }
 
     drawGridLines() {

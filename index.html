@@ -1,4 +1,5 @@
 <html>
+    <link rel="stylesheet" href="style.css">
     <script type="text/javascript" src = "GUI.js"></script>
     <script type="text/javascript" src = "GridGui.js"></script>
     <script type="text/javascript" src = "Grid.js"></script>
@@ -49,13 +50,21 @@
                offsetAdjustedMouseCoords = {"x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top)}
                gui.getGrid().setHover(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y, true)
            }
+           else {
+            gui.getGrid().deselectCurrentHoverCellKey();
+           }
         })
     }
     </script>
 
     <body onload="init()">
-        <div id="grid-container"></div>
-        <div id="menu-container"></div>
+        <div id="main-container">
+            <div id="grid-container"></div>
+            <div id="menu-container">
+                <div id="select-menu-container"></div>
+                <div id="button-menu-container"></div>
+            </div>
+        </div>
 
         <!-- 20 wide 10 high -->
         <textarea id="defaultmap" style="display: none;">

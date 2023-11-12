@@ -61,8 +61,7 @@ class Grid {
         {
             // deselect current active hover cell
             if (this.currentHoverCellKey !== null){
-                this.grid[this.currentHoverCellKey].hover = false;
-                this.grid[this.currentHoverCellKey].value = this.grid[this.currentHoverCellKey].baseValue
+                this.deselectCurrentHoverCellKey();
             }
 
             // assign new active hover cell
@@ -71,6 +70,14 @@ class Grid {
                "hover" : hoverVal
             }
             this.grid[key].value = WHITE_COLOUR;
+        }
+    }
+
+    deselectCurrentHoverCellKey() {
+        if (this.currentHoverCellKey in this.grid){
+            this.grid[this.currentHoverCellKey].hover = false;
+            this.grid[this.currentHoverCellKey].value = this.grid[this.currentHoverCellKey].baseValue
+            this.currentHoverCellKey = null;
         }
     }
 

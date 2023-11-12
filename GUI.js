@@ -9,22 +9,23 @@ class GUI {
     createSelectMenus() {
         function addLineBreak() {
             let lineBreakElement = document.createElement("br");
-            let menuContainer = document.getElementById("menu-container");
-            menuContainer.appendChild(lineBreakElement);
+            let selectMenuContainer = document.getElementById("select-menu-container");
+            selectMenuContainer.appendChild(lineBreakElement);
         }
 
         function createSelectListElement(elementData, options) {
             // create environment select element and label
             let selectElementLabel = document.createElement("label");
-            let menuContainer = document.getElementById("menu-container");
+            let selectMenuContainer = document.getElementById("select-menu-container");
             let selectElement = document.createElement("select");
 
             selectElement.name = elementData.name;
             selectElement.id = elementData.id;
             selectElementLabel.innerHTML = `${elementData.label}:`;
+            selectElementLabel.style.fontWeight = "bold";
             selectElementLabel.htmlFor = elementData.id;
-            menuContainer.appendChild(selectElementLabel);
-            menuContainer.appendChild(selectElement);
+            selectMenuContainer.appendChild(selectElementLabel);
+            selectMenuContainer.appendChild(selectElement);
 
             // add options to the select element
             for (let option of options) {
@@ -108,11 +109,11 @@ class GUI {
 
     createButtons() {
         function createButton(buttonData) {
-            let menuContainer = document.getElementById("menu-container");
+            let buttonMenuContainer = document.getElementById("button-menu-container");
             let buttonElement = document.createElement("button");
             buttonElement.id = buttonData.id;
             buttonElement.innerText = buttonData.text;
-            menuContainer.appendChild(buttonElement);
+            buttonMenuContainer.appendChild(buttonElement);
         }
 
         function createToggleGridButton() {
