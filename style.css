@@ -1,0 +1,29 @@
+body {
+    padding: 20px;
+}
+
+#main-container {
+    display: flex;
+    gap: 50px;
+}
+
+#menu-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#menu-container > div {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+#button-menu-container {
+    display: flex;
+    flex-direction: row;
+}
+
+#grid-container {
+    border: 3px solid black;
+}
