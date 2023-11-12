@@ -1,8 +1,9 @@
 class GUI {
-    constructor() {
-       this.createSelectMenus();
-       this.createButtons();
-       // TODO: add canvas to this class instead of index.html file
+    constructor(map) {
+        this.createSelectMenus();
+        this.createButtons();
+        // TODO: add canvas to this class instead of index.html file
+        this.grid = new GridGUI(document.getElementById("grid-container"), map);
     }
 
     createSelectMenus() {
@@ -144,5 +145,17 @@ class GUI {
         createToggleGridButton();
         createRunButton();
         createRunTestButton();
+    }
+
+    drawGrid() {
+        this.grid.draw();
+    }
+
+    getGrid() {
+        return this.grid.grid;
+    }
+
+    getCanvas() {
+        return this.grid.canvas;
     }
 }
