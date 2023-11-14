@@ -36,7 +36,6 @@ class Search_Solution {
     //  none    : this function does not return anything
 
     startSearch(sRow, sCol, gRow, gCol) {
-        this.inProgress = true;
         this.sRow = sRow;
         this.sCol = sCol;
         this.gRow = gRow;
@@ -45,7 +44,13 @@ class Search_Solution {
 
         // TODO: everything else necessary to start a new search
         // reset open and closed lists
+        this.open = new Set([]);
+        this.closed = new Set([]);
         // create root node and add it to the open list
+        let root = new Node(sRow, sCol, null, null);
+
+        // set search in progress flag
+        this.inProgress = true;
     }
 
 
