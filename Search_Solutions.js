@@ -19,8 +19,8 @@ class Search_Solution {
         this.name = "Student";
 
         this.path = [];
-        this.open = [];
-        this.closed = [];
+        this.open = new Set([]);
+        this.closed = new Set([]);
     }
 
     // TODO: Implement this function
@@ -73,6 +73,9 @@ class Search_Solution {
         // 1. create nx, ny (new location after the action is performed)
         // 2. if this.grid.isOOb(nx, ny) then return false
         // 3. if this.grid.get(x, y) not same as this.grid.get(nx, ny) return false
+        if (this.grid.isOOB(row, col) || (this.grid.get(row, col)).baseValue !== this.grid.get(row, col).baseValue) {
+            return false;
+        }
 
         return true;
     }
