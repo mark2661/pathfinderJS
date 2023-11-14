@@ -41,14 +41,14 @@ class Grid {
         return {"row": gridRow, "col": gridCol};
     }
 
-    get(x, y) {
-        let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(x, y);
+    get(mouseX, mouseY) {
+        let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(mouseX, mouseY);
         let key = Grid.getGridCellKey(gridReferenceCoords.row, gridReferenceCoords.col); 
         return (key in this.grid) ? this.grid[key] : null;
     }
 
-    setValue(x, y, val) {
-        let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(x, y);
+    setValue(mouseX, mouseY, val) {
+        let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(mouseX, mouseY);
         let key = Grid.getGridCellKey(gridReferenceCoords.row, gridReferenceCoords.col); 
         if (key in this.grid)
         {
@@ -58,8 +58,8 @@ class Grid {
         }
     }
 
-    setHover(x, y , hoverVal) {
-        let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(x, y);
+    setHover(mouseX, mouseY , hoverVal) {
+        let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(mouseX, mouseY);
         let key = Grid.getGridCellKey(gridReferenceCoords.row, gridReferenceCoords.col); 
         if (key in this.grid)
         {
