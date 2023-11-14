@@ -113,6 +113,7 @@ class GUI {
             let buttonElement = document.createElement("button");
             buttonElement.id = buttonData.id;
             buttonElement.innerText = buttonData.text;
+            buttonElement.style.fontWeight = "bold";
             buttonMenuContainer.appendChild(buttonElement);
         }
 

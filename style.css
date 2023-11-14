@@ -24,6 +24,10 @@ body {
     flex-direction: row;
 }
 
+button {
+    font-weight: bold;
+}
+
 #grid-container {
     border: 3px solid black;
 }
