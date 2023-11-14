@@ -8,10 +8,10 @@ class Search_Solution {
                                     // config.strategy = 'bfs' or 'dfs'
         
         this.grid = grid            // the search grid
-        this.sx = -1;               // x location of start state
-        this.sy = -1;               // y location of start state
-        this.gx = -1;               // x location of goal state
-        this.gy = -1;               // y location of goal state
+        this.sRow = -1;               // x location of start state
+        this.sCol = -1;               // y location of start state
+        this.gRow = -1;               // x location of goal state
+        this.gCol = -1;               // y location of goal state
         this.cost = 0;               
 
 
@@ -35,12 +35,12 @@ class Search_Solution {
     // Returns:
     //  none    : this function does not return anything
 
-    startSearch(sx, sy, gx, gy) {
+    startSearch(sRow, sCol, gRow, gCol) {
         this.inProgress = true;
-        this.sx = sx;
-        this.sy = sy;
-        this.gx = gx;
-        this.gy = gy;
+        this.sRow = sRow;
+        this.sCol = sCol;
+        this.gRow = gRow;
+        this.gCol = gCol;
         this.path = [];
 
         // TODO: everything else necessary to start a new search
@@ -61,9 +61,9 @@ class Search_Solution {
     // Returns:
     //  bool: whether or not the given action is legal at the given location
 
-    isLegalAction(x, y, action) {
-        let nx = x + action[0];
-        let ny = y + action[1];
+    isLegalAction(row, col, action) {
+        let nRow = row + action[0];
+        let nCol = col + action[1];
 
         // 1. create nx, ny (new location after the action is performed)
         // 2. if this.grid.isOOb(nx, ny) then return false
@@ -156,9 +156,9 @@ class Search_Solution {
 
 
 class Node {
-    constructor(x, y, action, parent) {
-        this.x = x;
-        this.y = y;
+    constructor(row, col, action, parent) {
+        this.row = row;
+        this.col = col;
         this.action = action;
         this.parent = parent;
     }
