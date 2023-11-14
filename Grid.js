@@ -19,7 +19,8 @@ class Grid {
         let grid = {};
         for (let y=0; y<mapData.length; y++) {
             for (let x=0; x<mapData[0].length; x++) {
-               let key = `${y},${x}`; 
+               //let key = `${y},${x}`; 
+               let key = Grid.getGridCellKey(x, y); 
                grid[key] = {
                 "value" : parseInt(mapData[y][x], 10),
                 "hover" : false,
@@ -28,6 +29,10 @@ class Grid {
             }
         }
         return grid;
+    }
+
+    static getGridCellKey(x, y) {
+        return `${y},${x}`;
     }
 
     static getGlobalMouseToGridReferenceCoords(mouseX, mouseY) {
@@ -39,13 +44,13 @@ class Grid {
 
     get(x, y) {
         let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(x, y);
-        let key = `${gridReferenceCoords.y},${gridReferenceCoords.x}`; 
+        let key = Grid.getGridCellKey(gridReferenceCoords.x, gridReferenceCoords.y); 
         return (key in this.grid) ? this.grid[key] : null;
     }
 
     setValue(x, y, val) {
         let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(x, y);
-        let key = `${gridReferenceCoords.y},${gridReferenceCoords.x}`; 
+        let key = Grid.getGridCellKey(gridReferenceCoords.x, gridReferenceCoords.y); 
         if (key in this.grid)
         {
             this.grid[key] = {...this.grid[key],
@@ -56,7 +61,7 @@ class Grid {
 
     setHover(x, y , hoverVal) {
         let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(x, y);
-        let key = `${gridReferenceCoords.y},${gridReferenceCoords.x}`; 
+        let key = Grid.getGridCellKey(gridReferenceCoords.x, gridReferenceCoords.y); 
         if (key in this.grid)
         {
             // deselect current active hover cell
@@ -80,6 +85,7 @@ class Grid {
             this.currentHoverCellKey = null;
         }
     }
+
 
     isOOB(x, y, size=1) {
         return x < 0 || y < 0 || (x + size) > this.width || (y + size) > this.height;
