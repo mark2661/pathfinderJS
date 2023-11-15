@@ -11,6 +11,7 @@ class Grid {
         this.width = formattedMapDataArray[0].length;
         this.maxSize = 3;
         this.grid = Grid.createGridObject(formattedMapDataArray);
+        this.searchSolution = null;
         this.currentHoverCellKey = null;
     }
 
@@ -87,5 +88,14 @@ class Grid {
 
     isOOB(row, col, size=1) {
         return row < 0 || col < 0 || (col + size) > this.width || (row + size) > this.height;
+    }
+
+    startSearch(config) {
+        //this.searchSolution = new Search_Solution(this.grid, config);
+        console.log("start search");
+    }
+
+    stopSearch() {
+        this.searchSolution = null;
     }
 }
