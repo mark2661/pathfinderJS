@@ -105,7 +105,6 @@ class Search_Solution {
                     return true;
                 }
             }
-
             return false;
         }
 
@@ -183,7 +182,7 @@ class Search_Solution {
     //      openList : an array of unique [x, y] states that are currently on the open list
 
     getOpen() {
-        return [];
+        return this.open;
     }
 
     // TODO: Implement this function
@@ -198,7 +197,7 @@ class Search_Solution {
     //  closedList: an array of unique [x, y] states that are currently on the closed list
 
     getClosed() {
-        return [];
+        return this.closed;
     }
 }
 
