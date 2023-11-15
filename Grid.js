@@ -13,6 +13,8 @@ class Grid {
         this.grid = Grid.createGridObject(formattedMapDataArray);
         this.searchSolution = null;
         this.currentHoverCellKey = null;
+        this.startCell = null;
+        this.goalCell = null;
     }
 
     static createGridObject(mapData) {
@@ -79,7 +81,7 @@ class Grid {
     }
 
     deselectCurrentHoverCellKey() {
-        if (this.currentHoverCellKey in this.grid){
+        if (this.currentHoverCellKey !== null && this.currentHoverCellKey in this.grid){
             this.grid[this.currentHoverCellKey].hover = false;
             this.grid[this.currentHoverCellKey].value = this.grid[this.currentHoverCellKey].baseValue
             this.currentHoverCellKey = null;
@@ -88,7 +90,8 @@ class Grid {
 
     setColor(key, colour) {
         if  (key in this.grid) {
-            this.grid[key] = colour;
+            this.grid[key].value = colour;
+            this.grid[key].baseValue = colour;
         }
     }
 
@@ -107,5 +110,21 @@ class Grid {
 
     isSearchInProgress() {
         return this.searchSolution !== null;
+    }
+
+    setStartCell(mouseX, mouseY) {
+        if (this.startCell === null) {
+            let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(mouseX, mouseY);
+            this.setColor(Grid.getGridCellKey(gridReferenceCoords.row, gridReferenceCoords.col), WHITE_COLOUR);
+            this.startCell = Grid.getGridCellKey(gridReferenceCoords.row, gridReferenceCoords.col);
+        }
+    }
+
+    setGoalCell(mouseX, mouseY) {
+        if (this.goalCell === null) {
+            let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(mouseX, mouseY);
+            this.setColor(Grid.getGridCellKey(gridReferenceCoords.row, gridReferenceCoords.col), PURPLE_COLOUR);
+            this.goalCell = Grid.getGridCellKey(gridReferenceCoords.row, gridReferenceCoords.col);
+        }
     }
 }

@@ -42,18 +42,35 @@
         }
 
         document.addEventListener('mousemove', (event) => {
-           let mouseX = event.pageX;
-           let mouseY = event.pageY;
-           
-           let gridDim = gui.getCanvas().getBoundingClientRect();
-           if (isMouseCursorOnCanvas(mouseX, mouseY, gui.getCanvas())) {
-               offsetAdjustedMouseCoords = {"x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top)}
-               gui.getGrid().setHover(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y, true)
-           }
-           else {
-            gui.getGrid().deselectCurrentHoverCellKey();
-           }
-        })
+            let mouseX = event.pageX;
+            let mouseY = event.pageY;
+
+            let gridDim = gui.getCanvas().getBoundingClientRect();
+            if (isMouseCursorOnCanvas(mouseX, mouseY, gui.getCanvas())) {
+                offsetAdjustedMouseCoords = { "x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top) }
+                gui.getGrid().setHover(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y, true)
+            }
+            else {
+                gui.getGrid().deselectCurrentHoverCellKey();
+            }
+        });
+
+        document.addEventListener("mousedown", (event) => {
+            let mouseX = event.pageX;
+            let mouseY = event.pageY;
+            let gridDim = gui.getCanvas().getBoundingClientRect();
+            if (isMouseCursorOnCanvas(mouseX, mouseY, gui.getCanvas())) {
+                offsetAdjustedMouseCoords = { "x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top) }
+
+                if (gui.getGrid().startCell === null){
+                    gui.getGrid().setStartCell(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y);
+                }
+
+                else if (gui.getGrid().goalCell === null) {
+                    gui.getGrid().setGoalCell(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y);
+                }
+            }
+        });
     }
     </script>
 
@@ -77,7 +94,7 @@
             22222221111111111222 
             22222221111111111222 
             22222222222222222222 
-            22222222222222222224 
+            22222222222222222225 
             22222222222222222222 
             22222222222222222222 
             22222222222222222222 

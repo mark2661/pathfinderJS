@@ -7,3 +7,4 @@ const BLUE_COLOUR = 0;
 const GREEN_COLOUR = 1;
 const RED_COLOUR = 2;
 const WHITE_COLOUR = 3;
+const PURPLE_COLOUR = 4;

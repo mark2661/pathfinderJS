@@ -142,6 +142,22 @@ class GUI {
             } 
             let runOnClickFunction = function() {
                 if (this.getGrid().searchSolution === null) {
+                    if (this.getGrid().startCell === null || this.getGrid().goalCell === null){
+                        if (this.getGrid().startCell === null && this.getGrid().goalCell === null) {
+                            let message = "Set Start and Goal Cells First";
+                            alert(message);
+                        }
+                        else if (this.getGrid().startCell === null) {
+                            let message = "Set Start Cell First";
+                            alert(message);
+                        }
+                        else {
+                            let message = "Set Goal Cell First";
+                            alert(message);
+                        }
+                        return;
+                    }
+
                     this.getGrid().startSearch();
                 }
             }
