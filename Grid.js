@@ -86,6 +86,12 @@ class Grid {
         }
     }
 
+    setColor(key, colour) {
+        if  (key in this.grid) {
+            this.grid[key] = colour;
+        }
+    }
+
     isOOB(row, col, size=1) {
         return row < 0 || col < 0 || (col + size) > this.width || (row + size) > this.height;
     }
@@ -97,5 +103,9 @@ class Grid {
 
     stopSearch() {
         this.searchSolution = null;
+    }
+
+    isSearchInProgress() {
+        return this.searchSolution !== null;
     }
 }
