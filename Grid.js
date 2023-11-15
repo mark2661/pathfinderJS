@@ -127,4 +127,13 @@ class Grid {
             this.goalCell = Grid.getGridCellKey(gridReferenceCoords.row, gridReferenceCoords.col);
         }
     }
+    
+    updatePath() {
+        if (this.isSearchInProgress()){
+            for (node of this.searchSolution.path) {
+                key = Grid.getGridCellKey(node.row, node.col);
+                this.setColor(key, WHITE_COLOUR);
+            }
+        }
+    }
 }
