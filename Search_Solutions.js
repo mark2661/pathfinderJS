@@ -19,8 +19,8 @@ class Search_Solution {
         this.name = "Student";
 
         this.path = [];
-        this.open = new Set([]);
-        this.closed = new Set([]);
+        this.open = [];
+        this.closed = [];
     }
 
     // TODO: Implement this function
@@ -44,8 +44,8 @@ class Search_Solution {
 
         // TODO: everything else necessary to start a new search
         // reset open and closed lists
-        this.open = new Set([]);
-        this.closed = new Set([]);
+        this.open = [];
+        this.closed = [];
         // create root node and add it to the open list
         let root = new Node(sRow, sCol, null, null);
 
@@ -99,35 +99,75 @@ class Search_Solution {
     //  none
 
     searchIteration() {
-        // Example: for simple demonstration, compute an L-shaped path to the goal
-        // This is just so the GUI shows somthing when Student code is initially selected
-        // Completly delete all of the code in this function to write your solution
+        function stateInClosedList(node) {
+            for (state of this.closed) {
+                if (node.row == state[0] && node.col == state[1]) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
 
         // if we've already finished the search, do nothing
         if (!this.inProgress) { return; }
 
-        // compute an L-shaped apth in a single step (you must replace this)
+        if (this.open.length === 0) {
+            // if the open list is empty stop the search (No valid solution found)
+            this.inProgress = false;
+            this.cost = -1;
+        }
 
-        let dx = (this.gx - this.sx) > 0 ? 1 : -1;
-        let dy = (this.gy - this.sy) > 0 ? 1 : -1;
-        for (let x=0; x < Math.abs(this.gx-this.sx); x++) { this.path.push([dx, 0]); }
-        for (let y=0; y < Math.abs(this.gy-this.sy); y++) { this.path.push([0, dy]); }
 
+        // NOTE: do not duplicate all of the BFS / DFS code in the conditonals below, only include the code that is different between the two algorithms
         // check to see which algorithm you should be implementing
         if (this.config.strategy == "bfs") {
-            // do bfs search
+            let currentNode = this.open.shift();
         }
         else if (this.config.strategy == "dfs") {
             // do dfs search
         }
 
-        // note: do not duplicate all of the BFS / DFS code in the conditonals above, only include the code that is different between the two algorithms
+        if (currentNode.row === this.gRow && currentNode.col === this.gCol)
+        {
+            // goal found costruct and return solution solution path
+            let curr = currentNode;
+            // don't want to terminate at start node, since start node has no action which produced it.
+            while (curr.parent !== null) {
+                this.path.push(curr.action);
+                curr = curr.parent;
+            }
 
-        // the cost of the path for this assignment is the path length * 100, since all the action costs are equal to 100 (4-directional movement)
-        this.cost = this.path.length * 100;
+            // the cost of the path is the path length * 100, since all the action costs are equal to 100 (4-directional movement)
+            this.cost = this.path.length * 100;
 
-        // path found
-        this.inProgress = false;
+            // path found stop search
+            this.inProgress = false;
+
+            // need to reverse solution path since current path goes from goal node -> start node.
+            return this.path.reverse();
+        }
+
+        if (!stateInClosedList(currentNode)) {
+            return;
+        }        
+
+        this.closed.push(currentNode);
+
+        // get legal neighbours of current node and add to open list
+        for (action of this.config.actions) {
+            if (!this.isLegalAction(currentNode.row, currentNode.col, action)) { continue; }
+
+            // create new neighbour node
+            let neighbourRow = currentNode.row + action[0];
+            let neighbourCol = currentNode.col + action[1];
+            let neighbourNode = new Node(neighbourRow, neighbourCol, action, currentNode);
+
+            // add new neighbour node to open list
+            this.open.push(neighbourNode);
+        }
+
+        
     }
 
     // TODO: Implement this function
