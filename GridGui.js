@@ -14,7 +14,18 @@ class GridGUI {
         this.container.appendChild(this.canvas);
     }
 
+    updatePath() {
+        if (this.grid.isSearchInProgress()){
+            for (node of this.grid.searchSolution.path) {
+                key = Grid.getGridCellKey(node.row, node.col);
+                this.grid.setColor(key, WHITE_COLOUR);
+            }
+        }
+    }
+
     draw() {
+        this.updatePath();
+
         for (let key in this.grid.grid) {
             let cell = this.grid.grid[key].value;
             let gridCellY = parseInt(key.split(",")[0], 10);
