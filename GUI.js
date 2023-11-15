@@ -108,12 +108,21 @@ class GUI {
     }
 
     createButtons() {
-        function createButton(buttonData) {
+        // hack to allow nested functions to refer to the class object
+        // https://stackoverflow.com/questions/20725360/using-this-for-parent-function-inside-a-nested-function
+        let self = this;
+
+        function createButton(buttonData, onClickFunction=null) {
             let buttonMenuContainer = document.getElementById("button-menu-container");
             let buttonElement = document.createElement("button");
             buttonElement.id = buttonData.id;
             buttonElement.innerText = buttonData.text;
             buttonElement.style.fontWeight = "bold";
+
+            if (onClickFunction !== null) {
+                buttonElement.addEventListener("click", onClickFunction);
+            }
+
             buttonMenuContainer.appendChild(buttonElement);
         }
 
@@ -131,8 +140,17 @@ class GUI {
                 "id": "run-button",
                 "text": "Run"
             } 
+            let runOnClickFunction = function() {
+                if (this.getGrid().searchSolution === null) {
+                    this.getGrid().startSearch();
+                }
+            }
 
-            createButton(runButtonData);
+            // need to bind the "this" context to the function arguement to ensure when the 
+            // function is called "this" refers to this class object.
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
+            // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
+            createButton(runButtonData, runOnClickFunction.bind(self));
         }
 
         function createRunTestButton() {
