@@ -124,7 +124,7 @@ class Search_Solution {
             let currentNode = this.open.shift();
         }
         else if (this.config.strategy == "dfs") {
-            // do dfs search
+            let currentNode = this.open.pop();
         }
 
         if (currentNode.row === this.gRow && currentNode.col === this.gCol)
@@ -144,7 +144,8 @@ class Search_Solution {
             this.inProgress = false;
 
             // need to reverse solution path since current path goes from goal node -> start node.
-            return this.path.reverse();
+            this.path.reverse();
+            return;
         }
 
         if (!stateInClosedList(currentNode)) {
