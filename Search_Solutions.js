@@ -23,7 +23,6 @@ class Search_Solution {
         this.closed = [];
     }
 
-    // TODO: Implement this function
 
     // This function should set up all the necessary data structures to begin a new search
     // this includes, but is not limited to: setting the start and goal locations, resetting the open and closed list, and resetting the path.
@@ -42,19 +41,17 @@ class Search_Solution {
         this.gCol = gCol;
         this.path = [];
 
-        // TODO: everything else necessary to start a new search
         // reset open and closed lists
         this.open = [];
         this.closed = [];
         // create root node and add it to the open list
         let root = new Node(sRow, sCol, null, null);
-
+        this.open.push(root);
         // set search in progress flag
         this.inProgress = true;
     }
 
 
-    // TODO: Implement this function
 
     // This function should compute and return whether or not the given action is able to be performed form the given (x, y) location
 
@@ -73,14 +70,15 @@ class Search_Solution {
         // 1. create nx, ny (new location after the action is performed)
         // 2. if this.grid.isOOb(nx, ny) then return false
         // 3. if this.grid.get(x, y) not same as this.grid.get(nx, ny) return false
-        if (this.grid.isOOB(row, col) || (this.grid.get(row, col)).baseValue !== this.grid.get(row, col).baseValue) {
+        // console.log(`curr: ${this.grid.get(row,col).baseValue}, next: ${this.grid.get(nRow, nCol).baseValue}`)
+        if (this.grid.isOOB(nRow, nCol) || (this.grid.get(row, col)).baseValue !== this.grid.get(nRow, nCol).baseValue) {
+            console.log("Illegal action")
             return false;
         }
 
         return true;
     }
 
-    // TODO: Implement this function
 
     // This function performs one iteration of the search, which is equivalent to everything inside the while (true) part of the algorithm pseudocode in the class
     // node. The only difference being that when a path is found, we set the internal path variable rather than return it from the funciton. When expanding the current
@@ -99,13 +97,22 @@ class Search_Solution {
     //  none
 
     searchIteration() {
+        // hack to access "this" in nested functions
+        let self = this;
         function stateInClosedList(node) {
-            for (state of this.closed) {
-                if (node.row == state[0] && node.col == state[1]) {
+            for (let state of self.closed) {
+                // console.log(state);
+                // if (node.row == state[0] && node.col == state[1]) {
+                if (node.row === state.row && node.col === state.col) {
                     return true;
                 }
             }
             return false;
+        }
+
+        function getParentKey(node, action) {
+            let parentKey = Grid.getGridCellKey(node.row - action[0], node.col - action[1]);
+            return parentKey;
         }
 
         // if we've already finished the search, do nothing
@@ -113,18 +120,23 @@ class Search_Solution {
 
         if (this.open.length === 0) {
             // if the open list is empty stop the search (No valid solution found)
+            console.log("No solution");
             this.inProgress = false;
             this.cost = -1;
+            return;
         }
 
 
         // NOTE: do not duplicate all of the BFS / DFS code in the conditonals below, only include the code that is different between the two algorithms
         // check to see which algorithm you should be implementing
-        if (this.config.strategy == "bfs") {
-            let currentNode = this.open.shift();
+
+        // define currentNode outside scope of conditionals so it is accessible by this function
+        let currentNode = null;
+        if (this.config.strategy === "bfs") {
+            currentNode = this.open.shift();
         }
-        else if (this.config.strategy == "dfs") {
-            let currentNode = this.open.pop();
+        else if (this.config.strategy === "dfs") {
+            currentNode = this.open.pop();
         }
 
         if (currentNode.row === this.gRow && currentNode.col === this.gCol)
@@ -133,7 +145,7 @@ class Search_Solution {
             let curr = currentNode;
             // don't want to terminate at start node, since start node has no action which produced it.
             while (curr.parent !== null) {
-                this.path.push(curr.action);
+                this.path.push(getParentKey(curr, curr.action));
                 curr = curr.parent;
             }
 
@@ -145,19 +157,20 @@ class Search_Solution {
 
             // need to reverse solution path since current path goes from goal node -> start node.
             this.path.reverse();
+            console.log(this.path);
             return;
         }
 
-        if (!stateInClosedList(currentNode)) {
+        if (stateInClosedList(currentNode)) {
             return;
         }        
 
         this.closed.push(currentNode);
 
         // get legal neighbours of current node and add to open list
-        for (action of this.config.actions) {
+        for (let action of this.config.actions) {
             if (!this.isLegalAction(currentNode.row, currentNode.col, action)) { continue; }
-
+            console.log("legal action")
             // create new neighbour node
             let neighbourRow = currentNode.row + action[0];
             let neighbourCol = currentNode.col + action[1];
@@ -170,7 +183,6 @@ class Search_Solution {
         
     }
 
-    // TODO: Implement this function
 
 
     // This function returns the current open list states in a given format. This exists as a separate funciton because the open list used in search will
@@ -186,7 +198,6 @@ class Search_Solution {
         return this.open;
     }
 
-    // TODO: Implement this function
 
     // This function returns the current closed list in a given foramt. This exists as a separate function, since your closed list used in the search may
     // have a custom data structure that is not an array
