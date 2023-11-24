@@ -67,7 +67,6 @@ class Search_Solution {
         // 1. create nx, ny (new location after the action is performed)
         // 2. if this.grid.isOOb(nx, ny) then return false
         // 3. if this.grid.get(x, y) not same as this.grid.get(nx, ny) return false
-        // console.log(`curr: ${this.grid.get(row,col).baseValue}, next: ${this.grid.get(nRow, nCol).baseValue}`)
         if (this.grid.get(row, col) === null || this.grid.get(nRow, nCol) === null || 
             this.grid.isOOB(nRow, nCol) || (this.grid.get(row, col)).baseValue !== this.grid.get(nRow, nCol).baseValue) {
             return false;
@@ -130,6 +129,8 @@ class Search_Solution {
         {
             // goal found costruct and return solution solution path
             let curr = currentNode;
+            // add goal cell to path
+            this.path.push(Grid.getGridCellKey(curr.row, curr.col));
             // don't want to terminate at start node, since start node has no action which produced it.
             while (curr.parent !== null) {
                 this.path.push(Grid.getGridCellKey(curr.parent.row, curr.parent.col));
@@ -148,12 +149,11 @@ class Search_Solution {
         }
 
         if (stateInClosedList(currentNode)) {
-            console.log("State in closed list");
             return;
         }        
 
         this.closed.push(currentNode);
-        this.grid.setColor(Grid.getGridCellKey(currentNode.row, currentNode.col), ORANGE_COLOUR)
+        // this.grid.setColor(Grid.getGridCellKey(currentNode.row, currentNode.col), ORANGE_COLOUR)
 
         // get legal neighbours of current node and add to open list
         for (let action of this.config.actions) {
@@ -166,12 +166,18 @@ class Search_Solution {
             // add new neighbour node to open list
             if (!stateInClosedList(neighbourNode))
             {
-                this.grid.setColor(Grid.getGridCellKey(neighbourNode.row, neighbourNode.col), YELLOW_COLOUR);
+                // this.grid.setColor(Grid.getGridCellKey(neighbourNode.row, neighbourNode.col), YELLOW_COLOUR);
                 this.open.push(neighbourNode);
             }
         }
 
         
+    }
+
+    search() {
+        while (this.inProgress){
+            this.searchIteration();
+        }
     }
 
 

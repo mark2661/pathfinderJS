@@ -151,4 +151,22 @@ class Grid {
             }
         }
     }
+
+    updateOpenList() {
+        if (this.isSearchInProgress()){
+            for (let node of this.searchSolution.getOpen()){
+                let key = Grid.getGridCellKey(node.row, node.col);
+                this.setColor(key, OPEN_LIST_COLOUR);
+            }
+        }
+    }
+
+    updateClosedList() {
+        if (this.isSearchInProgress()){
+            for (let node of this.searchSolution.getClosed()){
+                let key = Grid.getGridCellKey(node.row, node.col);
+                this.setColor(key, CLOSED_LIST_COLOUR);
+            }
+        }
+    }
 }

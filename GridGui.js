@@ -15,8 +15,32 @@ class GridGUI {
     }
 
     draw() {
+        let updateOpenAndClosedList = true;
         if (this.grid.isSearchInProgress()){
-            this.grid.searchSolution.searchIteration();
+            let visualisationMode = document.getElementById("visualisation-select").value.toLowerCase();
+            switch (visualisationMode){
+               case VISUALISATION_MODE_INSTANT_PATH_PLUS_OPEN_CLOSED_LIST:
+                    this.grid.searchSolution.search();
+                    break;
+
+                case VISUALISATION_MODE_ANIMATED_SEARCH:
+                    this.grid.searchSolution.searchIteration();
+                    break;
+
+                case VISUALISATION_MODE_INSTANT_PATH_ONLY:
+                    this.grid.searchSolution.search();
+                    updateOpenAndClosedList = false;
+                    break;
+                
+                // TODO: implement functionality
+                case VISUALISATION_MODE_SINGLE_STEP:
+                    break;
+            }
+        }
+
+        if (updateOpenAndClosedList){
+            this.grid.updateOpenList();
+            this.grid.updateClosedList();
         }
         this.grid.updatePath();
 

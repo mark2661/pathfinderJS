@@ -104,7 +104,7 @@ class GUI {
         createSearchAlgorithmSelectList(["bfs", "dfs"]);
         createGridCellSizeSelectList(["Default (20 x 20)"]);
         createLegalActionsSelectList(["4 Cardinal (Up, Down, Left, Right)"])
-        createVisualisationSelectList(["Instant Path + Open/Closed"])
+        createVisualisationSelectList(["Instant Path + Open/Closed", "Instant Path Only", "Animated Search", "Single Step"])
     }
 
     createButtons() {
