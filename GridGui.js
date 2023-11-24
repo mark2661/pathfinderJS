@@ -14,9 +14,10 @@ class GridGUI {
         this.container.appendChild(this.canvas);
     }
 
-    
-
     draw() {
+        if (this.grid.isSearchInProgress()){
+            this.grid.searchSolution.searchIteration();
+        }
         this.grid.updatePath();
 
         for (let key in this.grid.grid) {
