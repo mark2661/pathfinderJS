@@ -31,7 +31,7 @@ class GUI {
             for (let option of options) {
                 let selectOption = document.createElement("option");
                 selectOption.value = option;
-                selectOption.text = option;
+                selectOption.text = option.toUpperCase();
                 selectElement.appendChild(selectOption);
             }
         }
@@ -101,7 +101,7 @@ class GUI {
         }
 
         createEnvironmentMapSelectList(["Default (20 x 24)", "Big (100 X 100)"]);
-        createSearchAlgorithmSelectList(["BFS", "DFS"]);
+        createSearchAlgorithmSelectList(["bfs", "dfs"]);
         createGridCellSizeSelectList(["Default (20 x 20)"]);
         createLegalActionsSelectList(["4 Cardinal (Up, Down, Left, Right)"])
         createVisualisationSelectList(["Instant Path + Open/Closed"])
@@ -158,7 +158,14 @@ class GUI {
                         return;
                     }
 
-                    this.getGrid().startSearch();
+                    let searchAlgorithmSelectElement = document.getElementById("search-algorithm-select");
+                    let config = {
+                        "actions": [[-1, 0], [0, 1], [1, 0], [-1, 0]],
+                        "actionCost": [1, 1, 1, 1],
+                        "strategy": searchAlgorithmSelectElement.value
+                    }
+
+                    this.getGrid().startSearch(config);
                 }
             }
 
