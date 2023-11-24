@@ -1,5 +1,4 @@
 class Search_Solution {
-
     constructor(grid, config) {
 
         this.config = config        // serch configuration object
@@ -51,8 +50,6 @@ class Search_Solution {
         this.inProgress = true;
     }
 
-
-
     // This function should compute and return whether or not the given action is able to be performed form the given (x, y) location
 
     // Args:
@@ -71,8 +68,8 @@ class Search_Solution {
         // 2. if this.grid.isOOb(nx, ny) then return false
         // 3. if this.grid.get(x, y) not same as this.grid.get(nx, ny) return false
         // console.log(`curr: ${this.grid.get(row,col).baseValue}, next: ${this.grid.get(nRow, nCol).baseValue}`)
-        if (this.grid.isOOB(nRow, nCol) || (this.grid.get(row, col)).baseValue !== this.grid.get(nRow, nCol).baseValue) {
-            console.log("Illegal action")
+        if (this.grid.get(row, col) === null || this.grid.get(nRow, nCol) === null || 
+            this.grid.isOOB(nRow, nCol) || (this.grid.get(row, col)).baseValue !== this.grid.get(nRow, nCol).baseValue) {
             return false;
         }
 
@@ -101,18 +98,11 @@ class Search_Solution {
         let self = this;
         function stateInClosedList(node) {
             for (let state of self.closed) {
-                // console.log(state);
-                // if (node.row == state[0] && node.col == state[1]) {
                 if (node.row === state.row && node.col === state.col) {
                     return true;
                 }
             }
             return false;
-        }
-
-        function getParentKey(node, action) {
-            let parentKey = Grid.getGridCellKey(node.row - action[0], node.col - action[1]);
-            return parentKey;
         }
 
         // if we've already finished the search, do nothing
@@ -126,12 +116,9 @@ class Search_Solution {
             return;
         }
 
-
-        // NOTE: do not duplicate all of the BFS / DFS code in the conditonals below, only include the code that is different between the two algorithms
-        // check to see which algorithm you should be implementing
-
         // define currentNode outside scope of conditionals so it is accessible by this function
         let currentNode = null;
+
         if (this.config.strategy === "bfs") {
             currentNode = this.open.shift();
         }
@@ -145,7 +132,7 @@ class Search_Solution {
             let curr = currentNode;
             // don't want to terminate at start node, since start node has no action which produced it.
             while (curr.parent !== null) {
-                this.path.push(getParentKey(curr, curr.action));
+                this.path.push(Grid.getGridCellKey(curr.parent.row, curr.parent.col));
                 curr = curr.parent;
             }
 
@@ -157,27 +144,31 @@ class Search_Solution {
 
             // need to reverse solution path since current path goes from goal node -> start node.
             this.path.reverse();
-            console.log(this.path);
             return;
         }
 
         if (stateInClosedList(currentNode)) {
+            console.log("State in closed list");
             return;
         }        
 
         this.closed.push(currentNode);
+        this.grid.setColor(Grid.getGridCellKey(currentNode.row, currentNode.col), ORANGE_COLOUR)
 
         // get legal neighbours of current node and add to open list
         for (let action of this.config.actions) {
             if (!this.isLegalAction(currentNode.row, currentNode.col, action)) { continue; }
-            console.log("legal action")
             // create new neighbour node
             let neighbourRow = currentNode.row + action[0];
             let neighbourCol = currentNode.col + action[1];
             let neighbourNode = new Node(neighbourRow, neighbourCol, action, currentNode);
 
             // add new neighbour node to open list
-            this.open.push(neighbourNode);
+            if (!stateInClosedList(neighbourNode))
+            {
+                this.grid.setColor(Grid.getGridCellKey(neighbourNode.row, neighbourNode.col), YELLOW_COLOUR);
+                this.open.push(neighbourNode);
+            }
         }
 
         

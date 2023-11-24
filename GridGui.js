@@ -41,6 +41,12 @@ class GridGUI {
                 case PURPLE_COLOUR:
                     this.canvas_ctx.fillStyle = "purple";
                     break;
+                case ORANGE_COLOUR:
+                    this.canvas_ctx.fillStyle = "orange";
+                    break;
+                case YELLOW_COLOUR:
+                    this.canvas_ctx.fillStyle = "yellow";
+                    break;
                 default:
                     this.canvas_ctx.fillStyle = "black"
             }

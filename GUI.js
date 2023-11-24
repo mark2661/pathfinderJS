@@ -160,7 +160,7 @@ class GUI {
 
                     let searchAlgorithmSelectElement = document.getElementById("search-algorithm-select");
                     let config = {
-                        "actions": [[-1, 0], [0, 1], [1, 0], [-1, 0]],
+                        "actions": [[-1, 0], [0, 1], [1, 0], [0, -1]],
                         "actionCost": [1, 1, 1, 1],
                         "strategy": searchAlgorithmSelectElement.value
                     }

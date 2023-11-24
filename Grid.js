@@ -99,8 +99,8 @@ class Grid {
         }
     }
 
-    isOOB(row, col, size=1) {
-        return row < 0 || col < 0 || (col + size) > this.width || (row + size) > this.height;
+    isOOB(row, col, size=0) {
+        return row < 0 || col < 0 || (col + size) >= this.width || (row + size) >= this.height;
     }
 
     startSearch(config) {
