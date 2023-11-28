@@ -1,10 +1,16 @@
 <html>
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src = "GUI.js"></script>
-    <script type="text/javascript" src = "GridGui.js"></script>
-    <script type="text/javascript" src = "Grid.js"></script>
-    <script type="text/javascript" src = "Search_Solutions.js"></script>
-    <script type="text/javascript" src = "settings.js"></script>
+    <!-- <script type="text/javascript" src = "GUI.js"></script> -->
+    <script src="GUI.js"></script>
+    <script src="GridGui.js"></script>
+    <script src="Grid.js"></script>
+    <script src="Search_Solutions.js"></script>
+    <script src="settings.js"></script>
+    <script src="CanvasState.js"></script>
+    <script src="CanvasEditModeState.js"></script>
+    <script src="MenuState.js"></script>
+    <script src="MenuEditModeState.js"></script>
+    <script src="StateManager.js"></script>
 
     <head>
             <style>
@@ -24,7 +30,7 @@
             </style>
     </head>
 
-    <script>
+    <script defer>
     function isMouseCursorOnCanvas(mouseX, mouseY, canvas) {
         let canvasDimensions = canvas.getBoundingClientRect();
 
@@ -33,41 +39,45 @@
 
     init = function() {
 
-        let gui = new GUI(document.getElementById("defaultmap").value);
+        let stateManager = new StateManager();
 
         // set up the main loop
         setInterval(update, 1000 / 60);
         function update() {
-           gui.drawGrid();
+        //    gui.drawGrid();
+        stateManager.currentState.canvas.draw();
         }
+
 
         document.addEventListener('mousemove', (event) => {
             let mouseX = event.pageX;
             let mouseY = event.pageY;
 
-            let gridDim = gui.getCanvas().getBoundingClientRect();
-            if (isMouseCursorOnCanvas(mouseX, mouseY, gui.getCanvas())) {
+            // let gridDim = gui.getCanvas().getBoundingClientRect();
+            let gridDim = stateManager.currentState.canvas.canvas.getBoundingClientRect();
+            if (isMouseCursorOnCanvas(mouseX, mouseY, stateManager.currentState.canvas.canvas)) {
                 offsetAdjustedMouseCoords = { "x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top) }
-                gui.getGrid().setHover(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y, true)
+                //gui.getGrid().setHover(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y, true)
+                stateManager.currentState.canvas.setHover(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y, true)
             }
             else {
-                gui.getGrid().deselectCurrentHoverCellKey();
+                stateManager.currentState.canvas.deselectCurrentHoverCellKey();
             }
         });
 
         document.addEventListener("mousedown", (event) => {
             let mouseX = event.pageX;
             let mouseY = event.pageY;
-            let gridDim = gui.getCanvas().getBoundingClientRect();
-            if (isMouseCursorOnCanvas(mouseX, mouseY, gui.getCanvas())) {
+            let gridDim = stateManager.currentState.canvas.canvas.getBoundingClientRect();
+            if (isMouseCursorOnCanvas(mouseX, mouseY, stateManager.currentState.canvas.canvas)) {
                 offsetAdjustedMouseCoords = { "x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top) }
 
-                if (gui.getGrid().startCell === null){
-                    gui.getGrid().setStartCell(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y);
+                if (stateManager.currentState.canvas.startCell === null){
+                    stateManager.currentState.canvas.setStartCell(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y);
                 }
 
-                else if (gui.getGrid().goalCell === null) {
-                    gui.getGrid().setGoalCell(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y);
+                else if (stateManager.currentState.canvas.goalCell === null) {
+                    stateManager.currentState.canvas.setGoalCell(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y);
                 }
             }
         });
