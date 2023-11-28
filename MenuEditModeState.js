@@ -4,45 +4,16 @@ class MenuEditModeState extends MenuState{
     }
 
     createSelectMenus() {
-        function addLineBreak() {
-            let lineBreakElement = document.createElement("br");
-            let selectMenuContainer = document.getElementById("select-menu-container");
-            selectMenuContainer.appendChild(lineBreakElement);
-        }
-
-        function createSelectListElement(elementData, options) {
-            // create environment select element and label
-            let selectElementLabel = document.createElement("label");
-            let selectMenuContainer = document.getElementById("select-menu-container");
-            let selectElement = document.createElement("select");
-
-            selectElement.name = elementData.name;
-            selectElement.id = elementData.id;
-            selectElementLabel.innerHTML = `${elementData.label}:`;
-            selectElementLabel.style.fontWeight = "bold";
-            selectElementLabel.htmlFor = elementData.id;
-            selectMenuContainer.appendChild(selectElementLabel);
-            selectMenuContainer.appendChild(selectElement);
-
-            // add options to the select element
-            for (let option of options) {
-                let selectOption = document.createElement("option");
-                selectOption.value = option;
-                selectOption.text = option.toUpperCase();
-                selectElement.appendChild(selectOption);
-            }
-        }
-
         function createEnvironmentMapSelectList(options) {
             let environmentMapSelectElementData = {
                 "name": "map",
                 "id": "map-select",
                 "label": "Environment Map"
             }
-            createSelectListElement(environmentMapSelectElementData, options);
+            MenuState.createSelectListElement(environmentMapSelectElementData, options);
 
             // add line break to end of select menu
-            addLineBreak();
+            MenuState.addLineBreak();
         }
 
         function createSearchAlgorithmSelectList(options) {
@@ -51,10 +22,10 @@ class MenuEditModeState extends MenuState{
                 "id": "search-algorithm-select",
                 "label": "Search Algorithm"
             }
-            createSelectListElement(searchAlgorirhmElementData, options);
+            MenuState.createSelectListElement(searchAlgorirhmElementData, options);
 
             // add line break to end of select menu
-            addLineBreak();
+            MenuState.addLineBreak();
         }
 
         function createGridCellSizeSelectList(options) {
@@ -63,10 +34,10 @@ class MenuEditModeState extends MenuState{
                 "id": "grid-cell-size-select",
                 "label": "Grid Cell Size"
             }
-            createSelectListElement(gridCellSizeElementData, options);
+            MenuState.createSelectListElement(gridCellSizeElementData, options);
 
             // add line break to end of select menu
-            addLineBreak();
+            MenuState.addLineBreak();
 
         }
 
@@ -76,10 +47,10 @@ class MenuEditModeState extends MenuState{
                 "id": "legal-actions-select",
                 "label": "Legal Actions"
             }
-            createSelectListElement(legalActionsElementData, options);
+            MenuState.createSelectListElement(legalActionsElementData, options);
 
             // add line break to end of select menu
-            addLineBreak();
+            MenuState.addLineBreak();
 
         }
 
@@ -89,10 +60,11 @@ class MenuEditModeState extends MenuState{
                 "id": "visualisation-select",
                 "label": "Visualisation"
             }
-            createSelectListElement(visualisationElementData, options);
+
+            MenuState.createSelectListElement(visualisationElementData, options);
 
             // add line break to end of select menu
-            addLineBreak();
+            MenuState.addLineBreak();
 
         }
 
@@ -108,27 +80,13 @@ class MenuEditModeState extends MenuState{
         // https://stackoverflow.com/questions/20725360/using-this-for-parent-function-inside-a-nested-function
         let self = this;
 
-        function createButton(buttonData, onClickFunction = null) {
-            let buttonMenuContainer = document.getElementById("button-menu-container");
-            let buttonElement = document.createElement("button");
-            buttonElement.id = buttonData.id;
-            buttonElement.innerText = buttonData.text;
-            buttonElement.style.fontWeight = "bold";
-
-            if (onClickFunction !== null) {
-                buttonElement.addEventListener("click", onClickFunction);
-            }
-
-            buttonMenuContainer.appendChild(buttonElement);
-        }
-
         function createToggleGridButton() {
             const toggleGridButtonData = {
                 "id": "toggle-grid-button",
                 "text": "Toggle Grid"
             }
 
-            createButton(toggleGridButtonData);
+            MenuState.createButton(toggleGridButtonData);
         }
 
         function createRunButton() {
@@ -169,7 +127,7 @@ class MenuEditModeState extends MenuState{
             // function is called "this" refers to this class object.
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
-            createButton(runButtonData, runOnClickFunction.bind(self));
+            MenuState.createButton(runButtonData, runOnClickFunction.bind(self));
         }
 
         function createRunTestButton() {
@@ -178,7 +136,7 @@ class MenuEditModeState extends MenuState{
                 "text": "Run Test"
             }
 
-            createButton(runTestButtonData);
+            MenuState.createButton(runTestButtonData);
         }
 
         createToggleGridButton();
