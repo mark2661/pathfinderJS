@@ -10,8 +10,6 @@ class CanvasState{
         this.canvas = document.createElement("canvas");
         this.canvas_ctx = this.canvas.getContext("2d");
         this.canvas.setAttribute("id", "canvasID");
-        // this.canvas.setAttribute("width", `${this.gridObject.width * settings.grid_cell_width}`);
-        // this.canvas.setAttribute("height", `${this.gridObject.height * settings.grid_cell_height}`);
         this.canvas.setAttribute("width", `${this.stateManager.gridObject.width * settings.grid_cell_width}`);
         this.canvas.setAttribute("height", `${this.stateManager.gridObject.height * settings.grid_cell_height}`);
         this.container.appendChild(this.canvas);

@@ -58,7 +58,6 @@ class CanvasEditModeState extends CanvasState {
                 this.deselectCurrentHoverCellKey();
             }
             this.stateManager.gridObject.setColor(Grid.getGridCellKey(gridReferenceCoords.row, gridReferenceCoords.col), WHITE_COLOUR);
-            // console.log(`Start cell: ${this.startCell}`);
         }
     }
 
@@ -70,7 +69,6 @@ class CanvasEditModeState extends CanvasState {
                 this.deselectCurrentHoverCellKey();
             }
             this.stateManager.gridObject.setColor(Grid.getGridCellKey(gridReferenceCoords.row, gridReferenceCoords.col), PURPLE_COLOUR);
-            // console.log(`Goal cell: ${this.goalCell}`);
         }
     }
 }

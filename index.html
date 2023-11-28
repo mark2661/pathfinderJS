@@ -1,6 +1,5 @@
 <html>
     <link rel="stylesheet" href="style.css">
-    <!-- <script type="text/javascript" src = "GUI.js"></script> -->
     <script src="GUI.js"></script>
     <script src="GridGui.js"></script>
     <script src="Grid.js"></script>
@@ -44,20 +43,18 @@
         // set up the main loop
         setInterval(update, 1000 / 60);
         function update() {
-        //    gui.drawGrid();
         stateManager.currentState.canvas.draw();
         }
 
+
+        let gridDim = stateManager.currentState.canvas.canvas.getBoundingClientRect();
 
         document.addEventListener('mousemove', (event) => {
             let mouseX = event.pageX;
             let mouseY = event.pageY;
 
-            // let gridDim = gui.getCanvas().getBoundingClientRect();
-            let gridDim = stateManager.currentState.canvas.canvas.getBoundingClientRect();
             if (isMouseCursorOnCanvas(mouseX, mouseY, stateManager.currentState.canvas.canvas)) {
                 offsetAdjustedMouseCoords = { "x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top) }
-                //gui.getGrid().setHover(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y, true)
                 stateManager.currentState.canvas.setHover(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y, true)
             }
             else {
@@ -68,7 +65,6 @@
         document.addEventListener("mousedown", (event) => {
             let mouseX = event.pageX;
             let mouseY = event.pageY;
-            let gridDim = stateManager.currentState.canvas.canvas.getBoundingClientRect();
             if (isMouseCursorOnCanvas(mouseX, mouseY, stateManager.currentState.canvas.canvas)) {
                 offsetAdjustedMouseCoords = { "x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top) }
 

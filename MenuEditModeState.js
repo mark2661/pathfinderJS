@@ -33,7 +33,6 @@ class MenuEditModeState extends MenuState{
             }
         }
 
-        // TODO: Refactor these helper functions
         function createEnvironmentMapSelectList(options) {
             let environmentMapSelectElementData = {
                 "name": "map",
