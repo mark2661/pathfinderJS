@@ -15,7 +15,6 @@ class Search_Solution {
 
 
         this.inProgress = false;
-        this.name = "Student";
 
         this.path = [];
         this.open = [];
