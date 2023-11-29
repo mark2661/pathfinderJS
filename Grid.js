@@ -1,6 +1,3 @@
-// TODO: Implement either a state or strategy design pattern
-// to allow for an "edit" mode and a "search" mode with different behaviours
-// e.g. changing the UI, disabling buttons, turning off hover effect.
 class Grid {
     constructor(mapText) {
         // remove trailing whitespace from mapText
@@ -76,11 +73,7 @@ class Grid {
         this.width = this.formattedMapDataArray[0].length;
         this.maxSize = 3;
         this.grid = Grid.createGridObject(this.formattedMapDataArray);
-        // this.searchSolution = null;
-        // this.currentHoverCellKey = null;
-        // this.startCell = null;
-        // this.goalCell = null;
- 
+
     }
 
 }
