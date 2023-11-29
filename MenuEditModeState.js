@@ -4,16 +4,17 @@ class MenuEditModeState extends MenuState{
     }
 
     createSelectMenus() {
+        let self = this;
         function createEnvironmentMapSelectList(options) {
             let environmentMapSelectElementData = {
                 "name": "map",
                 "id": "map-select",
                 "label": "Environment Map"
             }
-            MenuState.createSelectListElement(environmentMapSelectElementData, options);
+            MenuState.createSelectListElement(self, environmentMapSelectElementData, options);
 
             // add line break to end of select menu
-            MenuState.addLineBreak();
+            MenuState.addLineBreak(self);
         }
 
         function createSearchAlgorithmSelectList(options) {
@@ -22,10 +23,10 @@ class MenuEditModeState extends MenuState{
                 "id": "search-algorithm-select",
                 "label": "Search Algorithm"
             }
-            MenuState.createSelectListElement(searchAlgorirhmElementData, options);
+            MenuState.createSelectListElement(self,searchAlgorirhmElementData, options);
 
             // add line break to end of select menu
-            MenuState.addLineBreak();
+            MenuState.addLineBreak(self);
         }
 
         function createGridCellSizeSelectList(options) {
@@ -34,10 +35,10 @@ class MenuEditModeState extends MenuState{
                 "id": "grid-cell-size-select",
                 "label": "Grid Cell Size"
             }
-            MenuState.createSelectListElement(gridCellSizeElementData, options);
+            MenuState.createSelectListElement(self,gridCellSizeElementData, options);
 
             // add line break to end of select menu
-            MenuState.addLineBreak();
+            MenuState.addLineBreak(self);
 
         }
 
@@ -47,10 +48,10 @@ class MenuEditModeState extends MenuState{
                 "id": "legal-actions-select",
                 "label": "Legal Actions"
             }
-            MenuState.createSelectListElement(legalActionsElementData, options);
+            MenuState.createSelectListElement(self,legalActionsElementData, options);
 
             // add line break to end of select menu
-            MenuState.addLineBreak();
+            MenuState.addLineBreak(self);
 
         }
 
@@ -61,10 +62,10 @@ class MenuEditModeState extends MenuState{
                 "label": "Visualisation"
             }
 
-            MenuState.createSelectListElement(visualisationElementData, options);
+            MenuState.createSelectListElement(self,visualisationElementData, options);
 
             // add line break to end of select menu
-            MenuState.addLineBreak();
+            MenuState.addLineBreak(self);
 
         }
 
@@ -86,7 +87,7 @@ class MenuEditModeState extends MenuState{
                 "text": "Toggle Grid"
             }
 
-            MenuState.createButton(toggleGridButtonData);
+            MenuState.createButton(self, toggleGridButtonData);
         }
 
         function createRunButton() {
@@ -118,31 +119,30 @@ class MenuEditModeState extends MenuState{
                         "actionCost": [1, 1, 1, 1],
                         "strategy": searchAlgorithmSelectElement.value
                     }
-                    // TODO: Pass a series of objects containing the state of the data
-                    // in the menu.
 
                     // store current select menu values in an object for reference
-                    let currentMenuState = {};
+                    let menuState = {};
                     let selectMenuNodes = Array.prototype.slice.call(document.getElementById("select-menu-container").children).filter((node) =>{
                         return node.tagName === "SELECT";
                     });
 
                     for(let node of selectMenuNodes){
                         let nodeID = node.id;
-                        currentMenuState[nodeID] = node.value;
+                        menuState[nodeID] = node.value;
                     }
 
-                    let currentGridState = {
+                    // store  grid information in an object for reference
+                    let gridState = {
                         "startCell": this.stateManager.currentState.canvas.startCell,
                         "goalCell": this.stateManager.currentState.canvas.goalCell
                     }
-                    // this.stateManager.currentState.canvas.startSearch(config);
-                    let currentOverallContext = {
+
+                    let context = {
                         "config": config,
-                        "currentMenuState": currentMenuState,
-                        "currentGridState": currentGridState
+                        "menuState": menuState,
+                        "gridState": gridState
                     }
-                    this.stateManager.switchState("search", currentOverallContext);
+                    this.stateManager.switchState("search", context);
                 }
             }
 
@@ -150,7 +150,7 @@ class MenuEditModeState extends MenuState{
             // function is called "this" refers to this class object.
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/this
             // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind
-            MenuState.createButton(runButtonData, runOnClickFunction.bind(self));
+            MenuState.createButton(self, runButtonData, runOnClickFunction.bind(self));
         }
 
         function createRunTestButton() {
@@ -159,7 +159,7 @@ class MenuEditModeState extends MenuState{
                 "text": "Run Test"
             }
 
-            MenuState.createButton(runTestButtonData);
+            MenuState.createButton(self, runTestButtonData);
         }
 
         createToggleGridButton();

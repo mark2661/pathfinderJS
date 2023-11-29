@@ -16,26 +16,28 @@ class StateManager {
         this.currentState = {
             "canvas": this.canvas_states["edit"],
             "menu": this.menu_states["edit"]
-            // "canvas": this.canvas_states["search"],
-            // "menu": this.menu_states["search"]
         }
 
+        // initialise current states
+        this.currentState.canvas.init();
+        this.currentState.menu.init();
     }
 
     switchState(stateKey, currentContext){
-        // TODO: needs to recive a series of objects containg the current state of the data
-        // in the menus before switching
         if (stateKey in this.canvas_states && stateKey in this.menu_states){
             this.currentState.canvas = this.canvas_states[stateKey];
             this.currentState.canvas.init(currentContext);
             
-            // clear current menu container child element nodes
-            document.getElementById("select-menu-container").replaceChildren();
+            // clear current menu sub contaienrs of their child element nodes
+            let subMenuContainers = Array.prototype.slice.call(document.getElementById("menu-container").children);
+            for(let subContainer of subMenuContainers){
+                subContainer.replaceChildren();
+            }
 
             this.currentState.menu = this.menu_states[stateKey];
-
-            // Add associated menu elements to the menu container
-            document.getElementById("select-menu-container").replaceChildren(
+            this.currentState.menu.init();
+            //Add associated menu elements to the menu container
+            document.getElementById("menu-container").replaceChildren(
                 ...this.currentState.menu.menuElements
             )
         }

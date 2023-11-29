@@ -4,13 +4,18 @@ class MenuSearchModeState extends MenuState{
     }
 
     createButtons(){
+        let self = this;
         function createResetGridButton(){
             const resetGridButtonData = {
                 "id": "reset-grid-button",
                 "text": "Reset Grid"
             }
 
-            MenuState.createButton(resetGridButtonData);
+            MenuState.createButton(self, resetGridButtonData);
         }
+
+        createResetGridButton();
     }
+
+
 }

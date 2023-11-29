@@ -2,18 +2,16 @@ class MenuState{
     constructor(stateManager, grid){
         this.stateManager = stateManager;
         this.grid = grid;
-        this.createSelectMenus();
-        this.createButtons();
-        this.menuElements =  document.getElementById("select-menu-container").children;
     }
 
-    static addLineBreak() {
+    static addLineBreak(callingElement) {
         let lineBreakElement = document.createElement("br");
         let selectMenuContainer = document.getElementById("select-menu-container");
+        callingElement.menuElements.push(lineBreakElement);
         selectMenuContainer.appendChild(lineBreakElement);
     }
 
-    static createSelectListElement(elementData, options) {
+    static createSelectListElement(callingElement, elementData, options) {
         // create environment select element and label
         let selectElementLabel = document.createElement("label");
         let selectMenuContainer = document.getElementById("select-menu-container");
@@ -34,9 +32,12 @@ class MenuState{
             selectOption.text = option.toUpperCase();
             selectElement.appendChild(selectOption);
         }
+
+        callingElement.menuElements.push(selectElementLabel);
+        callingElement.menuElements.push(selectElement);
     }
 
-    static createButton(buttonData, onClickFunction = null) {
+    static createButton(callingElement, buttonData, onClickFunction = null) {
         let buttonMenuContainer = document.getElementById("button-menu-container");
         let buttonElement = document.createElement("button");
         buttonElement.id = buttonData.id;
@@ -48,6 +49,7 @@ class MenuState{
         }
 
         buttonMenuContainer.appendChild(buttonElement);
+        callingElement.menuElements.push(buttonElement);
     }
 
     // Override
@@ -58,5 +60,11 @@ class MenuState{
     // Override
     createButtons() {
 
+    }
+
+    init() {
+        this.menuElements = [];
+        this.createSelectMenus();
+        this.createButtons();
     }
 }

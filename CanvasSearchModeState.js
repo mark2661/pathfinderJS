@@ -8,14 +8,10 @@ class CanvasSearchModeState extends CanvasState {
 
     startSearch(currentContext){
         this.searchSolution = new Search_Solution(this.stateManager.gridObject, currentContext.config);
-        // let sRow = parseInt(startCell.split(",")[0]);
-        // let sCol = parseInt(startCell.split(",")[1]);
-        // let gRow = parseInt(goalCell.split(",")[0]);
-        // let gCol = parseInt(goalCell.split(",")[1]);
-        let sRow = parseInt(currentContext.currentGridState.startCell.split(",")[0]);
-        let sCol = parseInt(currentContext.currentGridState.startCell.split(",")[1]);
-        let gRow = parseInt(currentContext.currentGridState.goalCell.split(",")[0]);
-        let gCol = parseInt(currentContext.currentGridState.goalCell.split(",")[1]);
+        let sRow = parseInt(currentContext.gridState.startCell.split(",")[0]);
+        let sCol = parseInt(currentContext.gridState.startCell.split(",")[1]);
+        let gRow = parseInt(currentContext.gridState.goalCell.split(",")[0]);
+        let gCol = parseInt(currentContext.gridState.goalCell.split(",")[1]);
 
         this.searchSolution.startSearch(sRow, sCol, gRow, gCol);
     }

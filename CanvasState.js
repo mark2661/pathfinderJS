@@ -58,13 +58,15 @@ class CanvasState{
 
         let updateOpenAndClosedList = true;
         if (this.isSearchInProgress()){
+            // TODO: clean up this "hacky" solution for assigning "visualisationMode" variable depending on the current state of the application
             let visualisationMode = null;
             if (this.previousContext !== null){
-                visualisationMode = this.previousContext.currentMenuState["visualisation-select"].toLowerCase();
+                visualisationMode = this.previousContext.menuState["visualisation-select"].toLowerCase();
             }
             else {
                 visualisationMode = document.getElementById("visualisation-select").value.toLowerCase();
             }
+
             switch (visualisationMode){
                case VISUALISATION_MODE_INSTANT_PATH_PLUS_OPEN_CLOSED_LIST:
                     this.searchSolution.search();
