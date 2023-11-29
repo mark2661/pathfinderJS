@@ -1,9 +1,7 @@
 class CanvasEditModeState extends CanvasState {
-    constructor(container, map) {
-        super(container, map);
+    constructor(stateManager, container, map) {
+        super(stateManager, container, map);
         this.currentHoverCellKey = null;
-        this.startCell = null;
-        this.goalCell = null;
     }
 
     setHover(mouseX, mouseY, hoverVal) {
@@ -34,12 +32,13 @@ class CanvasEditModeState extends CanvasState {
     }
 
     startSearch(config) {
-        this.searchSolution = new Search_Solution(this.stateManager.gridObject, config);
-        let sRow = parseInt(this.startCell.split(",")[0]);
-        let sCol = parseInt(this.startCell.split(",")[1]);
-        let gRow = parseInt(this.goalCell.split(",")[0]);
-        let gCol = parseInt(this.goalCell.split(",")[1]);
-        this.searchSolution.startSearch(sRow, sCol, gRow, gCol);
+    //     this.searchSolution = new Search_Solution(this.stateManager.gridObject, config);
+    //     let sRow = parseInt(this.startCell.split(",")[0]);
+    //     let sCol = parseInt(this.startCell.split(",")[1]);
+    //     let gRow = parseInt(this.goalCell.split(",")[0]);
+    //     let gCol = parseInt(this.goalCell.split(",")[1]);
+    //     this.searchSolution.startSearch(sRow, sCol, gRow, gCol);
+        this.stateManager.switchState("search", {"config": config})   
     }
 
     stopSearch() {

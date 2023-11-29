@@ -4,15 +4,28 @@ class CanvasState{
         this.container = container;
         this.createCanvas();
         this.searchSolution = null;
+        this.startCell = null;
+        this.goalCell = null;
+        this.previousContext = null;
     }
 
     createCanvas(){
-        this.canvas = document.createElement("canvas");
-        this.canvas_ctx = this.canvas.getContext("2d");
-        this.canvas.setAttribute("id", "canvasID");
-        this.canvas.setAttribute("width", `${this.stateManager.gridObject.width * settings.grid_cell_width}`);
-        this.canvas.setAttribute("height", `${this.stateManager.gridObject.height * settings.grid_cell_height}`);
-        this.container.appendChild(this.canvas);
+        function containsCanvas(container){
+            return container.children.length > 0
+        }
+        if (!containsCanvas(this.container))
+        {
+            this.canvas = document.createElement("canvas");
+            this.canvas_ctx = this.canvas.getContext("2d");
+            this.canvas.setAttribute("id", "canvasID");
+            this.canvas.setAttribute("width", `${this.stateManager.gridObject.width * settings.grid_cell_width}`);
+            this.canvas.setAttribute("height", `${this.stateManager.gridObject.height * settings.grid_cell_height}`);
+            this.container.appendChild(this.canvas);
+        }
+        else {
+            this.canvas = document.getElementById("canvasID");
+            this.canvas_ctx = this.canvas.getContext("2d");
+        }
     }
 
     draw(){
@@ -45,7 +58,13 @@ class CanvasState{
 
         let updateOpenAndClosedList = true;
         if (this.isSearchInProgress()){
-            let visualisationMode = document.getElementById("visualisation-select").value.toLowerCase();
+            let visualisationMode = null;
+            if (this.previousContext !== null){
+                visualisationMode = this.previousContext.currentMenuState["visualisation-select"].toLowerCase();
+            }
+            else {
+                visualisationMode = document.getElementById("visualisation-select").value.toLowerCase();
+            }
             switch (visualisationMode){
                case VISUALISATION_MODE_INSTANT_PATH_PLUS_OPEN_CLOSED_LIST:
                     this.searchSolution.search();
@@ -173,5 +192,8 @@ class CanvasState{
 
     // Override
     setGoalCell() { return; }
+
+    // Override
+    init() { return; }
 
 }

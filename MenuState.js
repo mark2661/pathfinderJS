@@ -4,6 +4,7 @@ class MenuState{
         this.grid = grid;
         this.createSelectMenus();
         this.createButtons();
+        this.menuElements =  document.getElementById("select-menu-container").children;
     }
 
     static addLineBreak() {

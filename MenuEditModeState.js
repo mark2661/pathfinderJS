@@ -118,8 +118,31 @@ class MenuEditModeState extends MenuState{
                         "actionCost": [1, 1, 1, 1],
                         "strategy": searchAlgorithmSelectElement.value
                     }
+                    // TODO: Pass a series of objects containing the state of the data
+                    // in the menu.
 
-                    this.stateManager.currentState.canvas.startSearch(config);
+                    // store current select menu values in an object for reference
+                    let currentMenuState = {};
+                    let selectMenuNodes = Array.prototype.slice.call(document.getElementById("select-menu-container").children).filter((node) =>{
+                        return node.tagName === "SELECT";
+                    });
+
+                    for(let node of selectMenuNodes){
+                        let nodeID = node.id;
+                        currentMenuState[nodeID] = node.value;
+                    }
+
+                    let currentGridState = {
+                        "startCell": this.stateManager.currentState.canvas.startCell,
+                        "goalCell": this.stateManager.currentState.canvas.goalCell
+                    }
+                    // this.stateManager.currentState.canvas.startSearch(config);
+                    let currentOverallContext = {
+                        "config": config,
+                        "currentMenuState": currentMenuState,
+                        "currentGridState": currentGridState
+                    }
+                    this.stateManager.switchState("search", currentOverallContext);
                 }
             }
 
