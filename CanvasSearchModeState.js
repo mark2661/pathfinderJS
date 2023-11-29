@@ -19,11 +19,8 @@ class CanvasSearchModeState extends CanvasState {
         this.searchSolution = null;
     }
 
-    isSearchInProgress() {
-        return this.searchSolution !== null;
-    }
-
     init(currentContext){
+        this.createCanvas();
         this.previousContext = currentContext;
         this.startSearch(currentContext);
     }

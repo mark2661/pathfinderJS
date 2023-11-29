@@ -4,21 +4,13 @@
 class Grid {
     constructor(mapText) {
         // remove trailing whitespace from mapText
-        let formattedMapDataArray = mapText.split("\n").map((row) => {
+        this.formattedMapDataArray = mapText.split("\n").map((row) => {
             return row.trim();
         }).filter((row) => {
             return row !== "";
         });
-
-        this.height = formattedMapDataArray.length;
-        this.width = formattedMapDataArray[0].length;
-        this.maxSize = 3;
-        this.grid = Grid.createGridObject(formattedMapDataArray);
-        this.searchSolution = null;
-        this.currentHoverCellKey = null;
-        this.startCell = null;
-        this.goalCell = null;
-    }
+        this.reset();
+   }
 
     static createGridObject(mapData) {
         // key = (y,x) coord (string), value = number from mapText (number type)
@@ -77,6 +69,18 @@ class Grid {
 
     isOOB(row, col, size=0) {
         return row < 0 || col < 0 || (col + size) >= this.width || (row + size) >= this.height;
+    }
+
+    reset(){
+        this.height = this.formattedMapDataArray.length;
+        this.width = this.formattedMapDataArray[0].length;
+        this.maxSize = 3;
+        this.grid = Grid.createGridObject(this.formattedMapDataArray);
+        // this.searchSolution = null;
+        // this.currentHoverCellKey = null;
+        // this.startCell = null;
+        // this.goalCell = null;
+ 
     }
 
 }

@@ -24,6 +24,7 @@ class StateManager {
     }
 
     switchState(stateKey, currentContext){
+        stateKey = stateKey.toLowerCase();
         if (stateKey in this.canvas_states && stateKey in this.menu_states){
             this.currentState.canvas = this.canvas_states[stateKey];
             this.currentState.canvas.init(currentContext);
@@ -36,10 +37,11 @@ class StateManager {
 
             this.currentState.menu = this.menu_states[stateKey];
             this.currentState.menu.init();
-            //Add associated menu elements to the menu container
-            document.getElementById("menu-container").replaceChildren(
-                ...this.currentState.menu.menuElements
-            )
+            //Add associated menu elements to the menu sub containers container
+            for (let menuElement of this.currentState.menu.menuElements){
+                document.getElementById(menuElement.containerID).appendChild(menuElement.element);
+            }
+            
         }
         else{
             throw new Error("StateManager::switchState, Invalid state Key");

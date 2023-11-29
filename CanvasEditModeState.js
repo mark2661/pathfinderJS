@@ -1,7 +1,6 @@
 class CanvasEditModeState extends CanvasState {
     constructor(stateManager, container, map) {
         super(stateManager, container, map);
-        this.currentHoverCellKey = null;
     }
 
     setHover(mouseX, mouseY, hoverVal) {
@@ -31,24 +30,6 @@ class CanvasEditModeState extends CanvasState {
         }
     }
 
-    startSearch(config) {
-    //     this.searchSolution = new Search_Solution(this.stateManager.gridObject, config);
-    //     let sRow = parseInt(this.startCell.split(",")[0]);
-    //     let sCol = parseInt(this.startCell.split(",")[1]);
-    //     let gRow = parseInt(this.goalCell.split(",")[0]);
-    //     let gCol = parseInt(this.goalCell.split(",")[1]);
-    //     this.searchSolution.startSearch(sRow, sCol, gRow, gCol);
-        this.stateManager.switchState("search", {"config": config})   
-    }
-
-    stopSearch() {
-        this.searchSolution = null;
-    }
-
-    isSearchInProgress() {
-        return this.searchSolution !== null;
-    }
-
     setStartCell(mouseX, mouseY) {
         if (this.startCell === null) {
             let gridReferenceCoords = Grid.getGlobalMouseToGridReferenceCoords(mouseX, mouseY);
@@ -69,5 +50,11 @@ class CanvasEditModeState extends CanvasState {
             }
             this.stateManager.gridObject.setColor(Grid.getGridCellKey(gridReferenceCoords.row, gridReferenceCoords.col), PURPLE_COLOUR);
         }
+    }
+
+    init(){
+        super.init();
+        this.currentHoverCellKey = null;
+        this.stateManager.gridObject.reset();
     }
 }

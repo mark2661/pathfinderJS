@@ -1,13 +1,8 @@
 class CanvasState{
-    constructor(stateManager, container, grid) {
+    constructor(stateManager, container) {
         this.stateManager = stateManager
         this.container = container;
-        this.createCanvas();
-        this.searchSolution = null;
-        this.startCell = null;
-        this.goalCell = null;
-        this.previousContext = null;
-    }
+   }
 
     createCanvas(){
         function containsCanvas(container){
@@ -181,7 +176,9 @@ class CanvasState{
     stopSearch(){ return; }
 
     // Override
-    isSearchInProgress(){ return false; }
+    isSearchInProgress(){ 
+        return this.searchSolution !== null;
+    }
 
     // Override
     setStartCell(){ return; }
@@ -196,6 +193,12 @@ class CanvasState{
     setGoalCell() { return; }
 
     // Override
-    init() { return; }
+    init() {
+        this.createCanvas();
+        this.searchSolution = null;
+        this.startCell = null;
+        this.goalCell = null;
+        this.previousContext = null;
+    }
 
 }

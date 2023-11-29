@@ -11,7 +11,11 @@ class MenuSearchModeState extends MenuState{
                 "text": "Reset Grid"
             }
 
-            MenuState.createButton(self, resetGridButtonData);
+            let runOnClickFunction = function(){
+                self.stateManager.switchState("edit");
+            }
+
+            MenuState.createButton(self, resetGridButtonData, runOnClickFunction);
         }
 
         createResetGridButton();

@@ -4,11 +4,18 @@ class MenuState{
         this.grid = grid;
     }
 
+    static addToMenuElementsList(callingElement, containerElement, childElement){
+        let containerElementID = containerElement.id;
+        callingElement.menuElements.push({
+            "element": childElement,
+            "containerID": containerElementID
+        });
+    }
     static addLineBreak(callingElement) {
         let lineBreakElement = document.createElement("br");
         let selectMenuContainer = document.getElementById("select-menu-container");
-        callingElement.menuElements.push(lineBreakElement);
         selectMenuContainer.appendChild(lineBreakElement);
+        MenuState.addToMenuElementsList(callingElement, selectMenuContainer, lineBreakElement);
     }
 
     static createSelectListElement(callingElement, elementData, options) {
@@ -33,8 +40,8 @@ class MenuState{
             selectElement.appendChild(selectOption);
         }
 
-        callingElement.menuElements.push(selectElementLabel);
-        callingElement.menuElements.push(selectElement);
+        MenuState.addToMenuElementsList(callingElement, selectMenuContainer, selectElementLabel);
+        MenuState.addToMenuElementsList(callingElement, selectMenuContainer, selectElement);
     }
 
     static createButton(callingElement, buttonData, onClickFunction = null) {
@@ -49,7 +56,7 @@ class MenuState{
         }
 
         buttonMenuContainer.appendChild(buttonElement);
-        callingElement.menuElements.push(buttonElement);
+        MenuState.addToMenuElementsList(callingElement, buttonMenuContainer, buttonElement);
     }
 
     // Override
