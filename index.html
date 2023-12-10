@@ -30,33 +30,61 @@
     </head>
 
     <script defer>
-    function isMouseCursorOnCanvas(mouseX, mouseY, canvas) {
-        let canvasDimensions = canvas.getBoundingClientRect();
-
-        return mouseX > canvasDimensions.left && mouseX < canvasDimensions.right && mouseY > canvasDimensions.top && mouseY < canvasDimensions.bottom
-    }
-
+    
     init = function() {
 
-        let stateManager = new StateManager();
+        function isMouseCursorOnCanvas() {
+            if (currentMousePos.x === null || currentMousePos.y == null) {
+                return false;
+            }
 
-        // set up the main loop
-        setInterval(update, 1000 / 60);
-        function update() {
-        stateManager.currentState.canvas.draw();
+            return currentMousePos.x > 0 && currentMousePos.x < gridDim.right && currentMousePos.y > 0 && currentMousePos.y < gridDim.bottom;
         }
 
+        function getOffsetAdjustedMouseCoords(mouseX, mouseY, gridDim) {
+            return { "x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top) }
+        }
+
+        let stateManager = new StateManager();
+        let currentMousePos = {
+            "x": null,
+            "y": null
+        }
 
         let canvas = document.getElementById("grid-container").firstElementChild;
         let gridDim = canvas.getBoundingClientRect();
 
+        // set up the main loop
+        setInterval(update, 1000 / 60);
+        function update() {
+            stateManager.currentState.canvas.draw();
+
+            if (stateManager.isMouseDown && isMouseCursorOnCanvas()) {
+                let oldGoalCell = stateManager.currentState.canvas.goalCell;
+                let currentGoalCellObject = Grid.getGlobalMouseToGridReferenceCoords(currentMousePos.x, currentMousePos.y);
+                let currentGoalCell = Grid.getGridCellKey(currentGoalCellObject.row, currentGoalCellObject.col);
+                if (stateManager.currentState.canvas.isSearchInProgress() && oldGoalCell !== currentGoalCell){
+                    stateManager.currentState.canvas.resetSearch(currentGoalCell); 
+                }
+                else if (oldGoalCell !== currentGoalCell) {
+                    // start new search
+                    console.log(typeof currentGoalCell)
+                    stateManager.currentState.canvas.resetSearch(currentGoalCell); 
+                }
+            }
+        }
+
+
+
         document.addEventListener('mousemove', (event) => {
             let mouseX = event.pageX;
             let mouseY = event.pageY;
+            offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY, gridDim);
+            currentMousePos.x = offsetAdjustedMouseCoords.x;
+            currentMousePos.y = offsetAdjustedMouseCoords.y;
 
-            if (isMouseCursorOnCanvas(mouseX, mouseY, canvas)) {
-                offsetAdjustedMouseCoords = { "x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top) }
-                stateManager.currentState.canvas.setHover(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y, true)
+            if (isMouseCursorOnCanvas()) {
+                stateManager.currentState.canvas.setHover(currentMousePos.x, currentMousePos.y, true)
             }
             else {
                 stateManager.currentState.canvas.deselectCurrentHoverCellKey();
@@ -66,19 +94,34 @@
         document.addEventListener("mousedown", (event) => {
             let mouseX = event.pageX;
             let mouseY = event.pageY;
-            if (isMouseCursorOnCanvas(mouseX, mouseY, canvas)) {
-                offsetAdjustedMouseCoords = { "x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top) }
+            offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY, gridDim);
+            currentMousePos.x = offsetAdjustedMouseCoords.x;
+            currentMousePos.y = offsetAdjustedMouseCoords.y;
 
+            if (isMouseCursorOnCanvas()) {
                 if (stateManager.currentState.canvas.startCell === null){
-                    stateManager.currentState.canvas.setStartCell(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y);
-                }
-
-                else if (stateManager.currentState.canvas.goalCell === null) {
-                    stateManager.currentState.canvas.setGoalCell(offsetAdjustedMouseCoords.x, offsetAdjustedMouseCoords.y);
+                    stateManager.isMouseDown = true;
+                    stateManager.currentState.canvas.setStartCell(currentMousePos.x, currentMousePos.y);
+                    stateManager.currentState.canvas.setGoalCell(currentMousePos.x, currentMousePos.y);
+                    // starts search
+                    stateManager.switchState("search", stateManager.getCurrentStateContext());
                 }
             }
         });
+
+        document.addEventListener("mouseup", (event) => {
+            let mouseX = event.pageX;
+            let mouseY = event.pageY;
+            offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY, gridDim);
+            currentMousePos.x = offsetAdjustedMouseCoords.x;
+            currentMousePos.y = offsetAdjustedMouseCoords.y;
+
+            if (isMouseCursorOnCanvas()){
+                stateManager.isMouseDown = false;
+            }
+        });
     }
+
     </script>
 
     <body onload="init()">

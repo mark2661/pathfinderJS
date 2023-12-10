@@ -73,7 +73,6 @@ class Grid {
         this.width = this.formattedMapDataArray[0].length;
         this.maxSize = 3;
         this.grid = Grid.createGridObject(this.formattedMapDataArray);
-
     }
 
 }

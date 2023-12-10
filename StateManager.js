@@ -1,5 +1,6 @@
 class StateManager {
     constructor() {
+        this.isMouseDown = false;
         this.gridObject = new Grid(document.getElementById("defaultmap").value);
 
         this.canvas_states = {
@@ -21,6 +22,40 @@ class StateManager {
         // initialise current states
         this.currentState.canvas.init();
         this.currentState.menu.init();
+    }
+
+    getCurrentStateContext(){
+        let searchAlgorithmSelectElement = document.getElementById("search-algorithm-select");
+        let config = {
+            "actions": [[-1, 0], [0, 1], [1, 0], [0, -1]],
+            "actionCost": [1, 1, 1, 1],
+            "strategy": searchAlgorithmSelectElement.value
+        }
+
+        // store current select menu values in an object for reference
+        let menuState = {};
+        let selectMenuNodes = Array.prototype.slice.call(document.getElementById("select-menu-container").children).filter((node) => {
+            return node.tagName === "SELECT";
+        });
+
+        for (let node of selectMenuNodes) {
+            let nodeID = node.id;
+            menuState[nodeID] = node.value;
+        }
+
+        // store  grid information in an object for reference
+        let gridState = {
+            "startCell": this.currentState.canvas.startCell,
+            "goalCell": this.currentState.canvas.goalCell
+        }
+
+        let context = {
+            "config": config,
+            "menuState": menuState,
+            "gridState": gridState,
+        }
+
+        return context;
     }
 
     switchState(stateKey, currentContext){

@@ -13,9 +13,7 @@ class Search_Solution {
         this.gCol = -1;               // y location of goal state
         this.cost = 0;               
 
-
         this.inProgress = false;
-
         this.path = [];
         this.open = [];
         this.closed = [];
@@ -38,6 +36,7 @@ class Search_Solution {
         this.gRow = gRow;
         this.gCol = gCol;
         this.path = [];
+        this.cost = 0;
 
         // reset open and closed lists
         this.open = [];
@@ -108,9 +107,9 @@ class Search_Solution {
 
         if (this.open.length === 0) {
             // if the open list is empty stop the search (No valid solution found)
-            console.log("No solution");
-            this.inProgress = false;
+            // console.log("No solution");
             this.cost = -1;
+            this.inProgress = false;
             return;
         }
 
@@ -176,6 +175,14 @@ class Search_Solution {
     search() {
         while (this.inProgress){
             this.searchIteration();
+        }
+
+        // If search was unsuccessful clear the closed, open and path list so they cannot be used.
+        // cost is set to -1 in the event of an unsuccessful search
+        if (this.cost === -1){
+            this.path = [];
+            this.closed = [];
+            this.open = [];
         }
     }
 

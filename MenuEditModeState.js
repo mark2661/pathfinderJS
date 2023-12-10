@@ -140,7 +140,7 @@ class MenuEditModeState extends MenuState{
                     let context = {
                         "config": config,
                         "menuState": menuState,
-                        "gridState": gridState
+                        "gridState": gridState,
                     }
                     this.stateManager.switchState("search", context);
                 }
