@@ -45,6 +45,14 @@
             return { "x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top) }
         }
 
+        function isRightMouseButtonDown(code){
+            return code === RIGHT_BUTTON_MOUSE_CODE;
+        }
+
+        function isLeftMouseButtonDown(code){
+            return code === LEFT_BUTTON_MOUSE_CODE;
+        }
+
         let stateManager = new StateManager();
         let currentMousePos = {
             "x": null,
@@ -59,6 +67,7 @@
         function update() {
             stateManager.currentState.canvas.draw();
 
+            // logic for real time pathfinding
             if (stateManager.isMouseDown && isMouseCursorOnCanvas()) {
                 let oldGoalCell = stateManager.currentState.canvas.goalCell;
                 let currentGoalCellObject = Grid.getGlobalMouseToGridReferenceCoords(currentMousePos.x, currentMousePos.y);
@@ -66,15 +75,8 @@
                 if (stateManager.currentState.canvas.isSearchInProgress() && oldGoalCell !== currentGoalCell){
                     stateManager.currentState.canvas.resetSearch(currentGoalCell); 
                 }
-                else if (oldGoalCell !== currentGoalCell) {
-                    // start new search
-                    console.log(typeof currentGoalCell)
-                    stateManager.currentState.canvas.resetSearch(currentGoalCell); 
-                }
             }
         }
-
-
 
         document.addEventListener('mousemove', (event) => {
             let mouseX = event.pageX;
@@ -97,8 +99,7 @@
             offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY, gridDim);
             currentMousePos.x = offsetAdjustedMouseCoords.x;
             currentMousePos.y = offsetAdjustedMouseCoords.y;
-
-            if (isMouseCursorOnCanvas()) {
+            if (isMouseCursorOnCanvas() && isRightMouseButtonDown(event.button)) {
                 if (stateManager.currentState.canvas.startCell === null){
                     stateManager.isMouseDown = true;
                     stateManager.currentState.canvas.setStartCell(currentMousePos.x, currentMousePos.y);
@@ -110,21 +111,30 @@
         });
 
         document.addEventListener("mouseup", (event) => {
+            if(isRightMouseButtonDown(event.button)){
+                stateManager.isMouseDown = false;
+            }
+        });
+
+        document.addEventListener("click", (event) =>{
             let mouseX = event.pageX;
             let mouseY = event.pageY;
             offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY, gridDim);
             currentMousePos.x = offsetAdjustedMouseCoords.x;
             currentMousePos.y = offsetAdjustedMouseCoords.y;
-
-            if (isMouseCursorOnCanvas()){
-                stateManager.isMouseDown = false;
+            if(isMouseCursorOnCanvas() && isLeftMouseButtonDown(event.button)){
+                if (stateManager.currentState.canvas.startCell === null) {
+                    stateManager.currentState.canvas.setStartCell(currentMousePos.x, currentMousePos.y);
+                }
+                else if (stateManager.currentState.canvas.goalCell === null) {
+                    stateManager.currentState.canvas.setGoalCell(currentMousePos.x, currentMousePos.y);
+                }
             }
         });
     }
-
     </script>
 
-    <body onload="init()">
+    <body onload="init()" oncontextmenu="return false">
         <div id="main-container">
             <div id="grid-container"></div>
             <div id="menu-container">

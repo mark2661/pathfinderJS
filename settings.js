@@ -3,6 +3,9 @@ const settings = {
     "grid_cell_height" : 20
 }
 
+const RIGHT_BUTTON_MOUSE_CODE = 2;
+const LEFT_BUTTON_MOUSE_CODE = 0;
+
 // colour mappings
 const BLUE_COLOUR = 0;
 const GREEN_COLOUR = 1;
