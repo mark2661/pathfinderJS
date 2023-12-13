@@ -201,7 +201,6 @@ class Search_Solution {
         return this.open;
     }
 
-
     // This function returns the current closed list in a given foramt. This exists as a separate function, since your closed list used in the search may
     // have a custom data structure that is not an array
 
@@ -213,6 +212,18 @@ class Search_Solution {
 
     getClosed() {
         return this.closed;
+    }
+
+    getStartCell(){
+        return `${this.sRow},${this.sCol}`;
+    }
+
+    getGoalCell(){
+        return `${this.gRow},${this.gCol}`;
+    }
+
+    getCost(){
+        return this.cost;
     }
 }
 

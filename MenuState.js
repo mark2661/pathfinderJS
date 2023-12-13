@@ -59,19 +59,47 @@ class MenuState{
         MenuState.addToMenuElementsList(callingElement, buttonMenuContainer, buttonElement);
     }
 
-    // Override
-    createSelectMenus() {
+    static createTable(callingElement, tableData){
+        let table = document.createElement("TABLE");
+        let selectMenuContainer = document.getElementById("select-menu-container");
 
+        // create headers
+        const tableHeaderElement = table.createTHead();
+        const tableHeaderRow = tableHeaderElement.insertRow();
+        for(let heading of tableData.headings){
+            const col = tableHeaderRow.insertCell();  
+            col.appendChild(document.createTextNode(heading));
+        }
+
+        // create rows
+        for (let rowData of tableData.rows)
+        {
+            const row = table.insertRow();
+            for(let cellData of rowData){
+                const col = row.insertCell();
+                col.appendChild(document.createTextNode(cellData));
+            }
+        }
+
+        MenuState.addToMenuElementsList(callingElement, selectMenuContainer, table);
     }
 
     // Override
-    createButtons() {
+    createSelectMenus() { }
 
-    }
+    // Override
+    createButtons() { }
+
+    // Override
+    createTables(){ }
+
+    // Override
+    update() { }
 
     init() {
         this.menuElements = [];
         this.createSelectMenus();
         this.createButtons();
+        this.createTables();
     }
 }

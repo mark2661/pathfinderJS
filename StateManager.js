@@ -19,6 +19,11 @@ class StateManager {
             "menu": this.menu_states["edit"]
         }
 
+        // this.currentState = {
+        //     "canvas": this.canvas_states["search"],
+        //     "menu": this.menu_states["search"]
+        // }
+
         // initialise current states
         this.currentState.canvas.init();
         this.currentState.menu.init();
@@ -81,5 +86,10 @@ class StateManager {
         else{
             throw new Error("StateManager::switchState, Invalid state Key");
         }
+    }
+
+    update(){
+        this.currentState.canvas.draw();
+        this.currentState.menu.update();
     }
 }
