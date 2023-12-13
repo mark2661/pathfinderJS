@@ -186,8 +186,6 @@ class Search_Solution {
         }
     }
 
-
-
     // This function returns the current open list states in a given format. This exists as a separate funciton because the open list used in search will
     // store nodes instead of states, and may gave a custom data structure that is not an array.
 

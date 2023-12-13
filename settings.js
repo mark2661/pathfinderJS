@@ -23,3 +23,10 @@ const VISUALISATION_MODE_INSTANT_PATH_PLUS_OPEN_CLOSED_LIST = "instant path + op
 const VISUALISATION_MODE_ANIMATED_SEARCH = "animated search";
 const VISUALISATION_MODE_INSTANT_PATH_ONLY = "instant path only";
 const VISUALISATION_MODE_SINGLE_STEP = "single step";
+
+
+//grid cell size select menu options
+const GRID_CELL_SIZE_SELECT_MENU_OPTIONS_MAPPINGS = {
+    "default": 20,
+    "small": 10
+}

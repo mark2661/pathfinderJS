@@ -18,7 +18,45 @@ class MenuSearchModeState extends MenuState{
             MenuState.createButton(self, resetGridButtonData, runOnClickFunction);
         }
 
+        function createStepButton(){
+            const stepButtonData = {
+                "id": "step-button",
+                "text": "Step"
+            };
+
+            let runOnClickFunction = function(){
+                if(self.stateManager.currentState.canvas.isSearchInProgress()){
+                    self.stateManager.currentState.canvas.searchSolution.searchIteration();
+                }
+            }
+
+            MenuState.createButton(self, stepButtonData, runOnClickFunction);
+        }
+
+        function createCompleteSearchButton(){
+            const completeSearchButtonData = {
+                "id": "complete-search-button",
+                "text": "Complete Search"
+            }
+
+            let runOnClickFunction = function(){
+                let isSearchInProgress = self.stateManager.currentState.canvas.isSearchInProgress();
+                let context = self.stateManager.currentState.canvas.previousContext;
+                if(isSearchInProgress && context !== null){
+                    self.stateManager.currentState.canvas.previousContext.menuState["visualisation-select"] = VISUALISATION_MODE_INSTANT_PATH_PLUS_OPEN_CLOSED_LIST;
+                }
+            }
+
+            MenuState.createButton(self, completeSearchButtonData, runOnClickFunction);
+        }
+
         createResetGridButton();
+        // if "Single Step" visualisation selected in the menu create these extra buttons
+        let currentVisualisationMode = this.stateManager.currentState.canvas.previousContext.menuState["visualisation-select"].toLowerCase();
+        if (currentVisualisationMode === VISUALISATION_MODE_SINGLE_STEP){
+            createStepButton();
+            createCompleteSearchButton();
+        }
     }
 
     createTables(){

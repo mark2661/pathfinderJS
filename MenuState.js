@@ -18,7 +18,7 @@ class MenuState{
         MenuState.addToMenuElementsList(callingElement, selectMenuContainer, lineBreakElement);
     }
 
-    static createSelectListElement(callingElement, elementData, options) {
+    static createSelectListElement(callingElement, elementData, options, onChangeFunction = null) {
         // create environment select element and label
         let selectElementLabel = document.createElement("label");
         let selectMenuContainer = document.getElementById("select-menu-container");
@@ -38,6 +38,10 @@ class MenuState{
             selectOption.value = option;
             selectOption.text = option.toUpperCase();
             selectElement.appendChild(selectOption);
+        }
+
+        if(onChangeFunction !== null){
+            selectElement.onchange = onChangeFunction;
         }
 
         MenuState.addToMenuElementsList(callingElement, selectMenuContainer, selectElementLabel);

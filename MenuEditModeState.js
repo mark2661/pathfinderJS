@@ -35,7 +35,15 @@ class MenuEditModeState extends MenuState{
                 "id": "grid-cell-size-select",
                 "label": "Grid Cell Size"
             }
-            MenuState.createSelectListElement(self,gridCellSizeElementData, options);
+
+            let onChangeFunction = function(){
+                const selectedOption = this.options[this.selectedIndex].value.toLowerCase().split(" ")[0]; 
+                // settings.grid_cell_height = GRID_CELL_SIZE_SELECT_MENU_OPTIONS_MAPPINGS[selectedOption];
+                // settings.grid_cell_width = GRID_CELL_SIZE_SELECT_MENU_OPTIONS_MAPPINGS[selectedOption];
+                // TODO: need to reset canvas for new size
+                // self.stateManager.currentState.canvas.
+            }
+            MenuState.createSelectListElement(self, gridCellSizeElementData, options, onChangeFunction);
 
             // add line break to end of select menu
             MenuState.addLineBreak(self);
@@ -71,7 +79,7 @@ class MenuEditModeState extends MenuState{
 
         createEnvironmentMapSelectList(["Default (20 x 24)", "Big (100 X 100)"]);
         createSearchAlgorithmSelectList(["bfs", "dfs"]);
-        createGridCellSizeSelectList(["Default (20 x 20)"]);
+        createGridCellSizeSelectList(["Default (20 x 20)", "Small (10 x 10)"]);
         createLegalActionsSelectList(["4 Cardinal (Up, Down, Left, Right)"])
         createVisualisationSelectList(["Instant Path + Open/Closed", "Instant Path Only", "Animated Search", "Single Step"])
     }

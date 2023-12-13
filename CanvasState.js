@@ -76,8 +76,8 @@ class CanvasState{
                     updateOpenAndClosedList = false;
                     break;
                 
-                // TODO: implement functionality
                 case VISUALISATION_MODE_SINGLE_STEP:
+                    // Wait for user to signal updates via button clicks in "single step" mode
                     break;
             }
         }
