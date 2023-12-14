@@ -40,8 +40,7 @@ class MenuEditModeState extends MenuState{
                 const selectedOption = this.options[this.selectedIndex].value.toLowerCase().split(" ")[0]; 
                 // settings.grid_cell_height = GRID_CELL_SIZE_SELECT_MENU_OPTIONS_MAPPINGS[selectedOption];
                 // settings.grid_cell_width = GRID_CELL_SIZE_SELECT_MENU_OPTIONS_MAPPINGS[selectedOption];
-                // TODO: need to reset canvas for new size
-                // self.stateManager.currentState.canvas.
+                // self.stateManager.currentState.canvas.resetCanvas();
             }
             MenuState.createSelectListElement(self, gridCellSizeElementData, options, onChangeFunction);
 

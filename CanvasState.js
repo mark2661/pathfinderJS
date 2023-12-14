@@ -23,6 +23,12 @@ class CanvasState{
         }
     }
 
+    resetCanvas(){
+        // console.log(this.container)
+        this.container.removeChild(this.canvas);
+        this.createCanvas();
+    }
+
     draw(){
         let self = this;
         function updatePath() {

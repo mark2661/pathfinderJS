@@ -38,10 +38,12 @@
                 return false;
             }
 
+            let gridDim = document.getElementById("grid-container").firstElementChild.getBoundingClientRect();
             return currentMousePos.x > 0 && currentMousePos.x < gridDim.right && currentMousePos.y > 0 && currentMousePos.y < gridDim.bottom;
         }
 
-        function getOffsetAdjustedMouseCoords(mouseX, mouseY, gridDim) {
+        function getOffsetAdjustedMouseCoords(mouseX, mouseY) {
+            let gridDim = document.getElementById("grid-container").firstElementChild.getBoundingClientRect();
             return { "x": (mouseX - gridDim.left), "y": (mouseY - gridDim.top) }
         }
 
@@ -81,11 +83,12 @@
         document.addEventListener('mousemove', (event) => {
             let mouseX = event.pageX;
             let mouseY = event.pageY;
-            offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY, gridDim);
+            offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY);
             currentMousePos.x = offsetAdjustedMouseCoords.x;
             currentMousePos.y = offsetAdjustedMouseCoords.y;
 
             if (isMouseCursorOnCanvas()) {
+                // console.log("mouse on canvas")
                 stateManager.currentState.canvas.setHover(currentMousePos.x, currentMousePos.y, true)
             }
             else {
@@ -96,7 +99,7 @@
         document.addEventListener("mousedown", (event) => {
             let mouseX = event.pageX;
             let mouseY = event.pageY;
-            offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY, gridDim);
+            offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY);
             currentMousePos.x = offsetAdjustedMouseCoords.x;
             currentMousePos.y = offsetAdjustedMouseCoords.y;
             if (isMouseCursorOnCanvas() && isRightMouseButtonDown(event.button)) {
@@ -119,7 +122,7 @@
         document.addEventListener("click", (event) =>{
             let mouseX = event.pageX;
             let mouseY = event.pageY;
-            offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY, gridDim);
+            offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY);
             currentMousePos.x = offsetAdjustedMouseCoords.x;
             currentMousePos.y = offsetAdjustedMouseCoords.y;
             if(isMouseCursorOnCanvas() && isLeftMouseButtonDown(event.button)){
