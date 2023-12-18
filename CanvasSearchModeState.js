@@ -31,6 +31,7 @@ class CanvasSearchModeState extends CanvasState {
         this.previousContext = currentContext;
         this.startCell = currentContext.gridState.startCell;
         this.goalCell = currentContext.gridState.goalCell;
+        this.gridLines = currentContext.gridState.gridLines;
         this.startSearch(this.startCell, this.goalCell, currentContext.config);
     }
     

@@ -1,7 +1,8 @@
 class StateManager {
     constructor() {
         this.isMouseDown = false;
-        this.gridObject = new Grid(document.getElementById("defaultmap").value);
+        // this.gridObject = new Grid(document.getElementById("defaultmap").value);
+        this.gridObject = new Grid(document.getElementById("bigmap").value);
 
         this.canvas_states = {
                             "edit": new CanvasEditModeState(this, document.getElementById("grid-container"), this.gridObject),
@@ -10,7 +11,6 @@ class StateManager {
                         
         this.menu_states = {
                             "edit": new MenuEditModeState(this, this.gridObject),
-                            // TODO: Implement and add MenuSearchModeState
                             "search" : new MenuSearchModeState(this, this.gridObject)
                       };
         
@@ -51,7 +51,8 @@ class StateManager {
         // store  grid information in an object for reference
         let gridState = {
             "startCell": this.currentState.canvas.startCell,
-            "goalCell": this.currentState.canvas.goalCell
+            "goalCell": this.currentState.canvas.goalCell,
+            "gridLines": this.currentState.canvas.gridLines
         }
 
         let context = {

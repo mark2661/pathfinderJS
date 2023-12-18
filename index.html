@@ -62,7 +62,6 @@
         }
 
         let canvas = document.getElementById("grid-container").firstElementChild;
-        let gridDim = canvas.getBoundingClientRect();
 
         // set up the main loop
         setInterval(update, 1000 / 60);
@@ -81,37 +80,43 @@
         }
 
         document.addEventListener('mousemove', (event) => {
-            let mouseX = event.pageX;
-            let mouseY = event.pageY;
-            offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY);
-            currentMousePos.x = offsetAdjustedMouseCoords.x;
-            currentMousePos.y = offsetAdjustedMouseCoords.y;
+                let mouseX = event.pageX;
+                let mouseY = event.pageY;
+                offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY);
+                currentMousePos.x = offsetAdjustedMouseCoords.x;
+                currentMousePos.y = offsetAdjustedMouseCoords.y;
 
-            if (isMouseCursorOnCanvas()) {
-                // console.log("mouse on canvas")
-                stateManager.currentState.canvas.setHover(currentMousePos.x, currentMousePos.y, true)
-            }
-            else {
-                stateManager.currentState.canvas.deselectCurrentHoverCellKey();
-            }
-        });
+                if (isMouseCursorOnCanvas()) {
+                    stateManager.currentState.canvas.setHover(currentMousePos.x, currentMousePos.y, true)
+                }
+                else {
+                    stateManager.currentState.canvas.deselectCurrentHoverCellKey();
+                }
+       });
 
         document.addEventListener("mousedown", (event) => {
-            let mouseX = event.pageX;
-            let mouseY = event.pageY;
-            offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY);
-            currentMousePos.x = offsetAdjustedMouseCoords.x;
-            currentMousePos.y = offsetAdjustedMouseCoords.y;
-            if (isMouseCursorOnCanvas() && isRightMouseButtonDown(event.button)) {
-                if (stateManager.currentState.canvas.startCell === null){
-                    stateManager.isMouseDown = true;
-                    stateManager.currentState.canvas.setStartCell(currentMousePos.x, currentMousePos.y);
-                    stateManager.currentState.canvas.setGoalCell(currentMousePos.x, currentMousePos.y);
-                    // starts search
-                    stateManager.switchState("search", stateManager.getCurrentStateContext());
+            if (stateManager.currentState.canvas instanceof CanvasEditModeState){
+                let mouseX = event.pageX;
+                let mouseY = event.pageY;
+                offsetAdjustedMouseCoords = getOffsetAdjustedMouseCoords(mouseX, mouseY);
+                currentMousePos.x = offsetAdjustedMouseCoords.x;
+                currentMousePos.y = offsetAdjustedMouseCoords.y;
+                const currentVisualisationMode = document.getElementById("visualisation-select").value.toLowerCase();
+                if (isMouseCursorOnCanvas() && isRightMouseButtonDown(event.button) && !BANNED_RIGHT_CLICK_VISUALISATION_MODES.includes(currentVisualisationMode)) {
+                    if (stateManager.currentState.canvas.startCell === null) {
+                        stateManager.isMouseDown = true;
+                        stateManager.currentState.canvas.setStartCell(currentMousePos.x, currentMousePos.y);
+                        stateManager.currentState.canvas.setGoalCell(currentMousePos.x, currentMousePos.y);
+                        // starts search
+                        stateManager.switchState("search", stateManager.getCurrentStateContext());
+                    }
+                }
+                else if (isMouseCursorOnCanvas() && isRightMouseButtonDown(event.button)){
+                    const message = "Real Time Search Cannot Be Done In Current Visualisation Mode";
+                    alert(message);
                 }
             }
-        });
+       });
 
         document.addEventListener("mouseup", (event) => {
             if(isRightMouseButtonDown(event.button)){
@@ -146,7 +151,7 @@
             </div>
         </div>
 
-        <!-- 20 wide 10 high -->
+        <!-- 20 wide 11 high -->
         <textarea id="defaultmap" style="display: none;">
             21111112222222222222 
             22222222222222222222 
@@ -173,5 +178,35 @@
             22222222222222222222 
             22222222222222222222 
         </textarea>
+
+        <!-- big 40 wide 22 high -->
+        <textarea id="bigmap" style="display: none;">
+            2111111222222222222221111112222222222222
+            2222222222222222222222222222222222222222
+            2222222222222221122222222222222222211222
+            2222222222222221122222222222222222211222
+            2222222222222221122222222222222222211222
+            2222222222222221122222222222222222211222
+            2222222111111111122222222221111111111222
+            2222222111111111122222222221111111111222
+            2222222222222222222222222222222222222222
+            2111111111111222211221111111111112222112
+            2222222222222222211222222222222222222112
+            2222222222222222211222222222222222222112
+            2222222222222222211222222222222222222112
+            2222222222222222211222222222222222222112
+            2222222222222222211222222222222222222112
+            2222211111111122211222222111111111222112
+            2222211111111122222222222111111111222222
+            2222222222221122222222222222222211222222
+            2222222222221122222222222222222211222222
+            2222222222221122222222222222222211222222
+            2222222222221122222222222222222211222222
+            2222222222221122222222222222222211222222
+            2222222222222222222222222222222222222222
+            2222222222222222222222222222222222222222
+        </textarea>
+
+
     </body>
 </html>

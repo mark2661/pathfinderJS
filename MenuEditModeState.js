@@ -94,7 +94,11 @@ class MenuEditModeState extends MenuState{
                 "text": "Toggle Grid"
             }
 
-            MenuState.createButton(self, toggleGridButtonData);
+            let runOnClickFunction = function(){
+                self.stateManager.currentState.canvas.toggleGridLines();
+            }
+
+            MenuState.createButton(self, toggleGridButtonData, runOnClickFunction);
         }
 
         function createRunButton() {
@@ -102,6 +106,7 @@ class MenuEditModeState extends MenuState{
                 "id": "run-button",
                 "text": "Run"
             }
+            // TODO: May be able to delete this and use getCurrentContext method in StateManager
             let runOnClickFunction = function () {
                 if (this.stateManager.currentState.canvas.searchSolution === null) {
                     if (this.stateManager.currentState.canvas.startCell === null || this.stateManager.currentState.canvas.goalCell === null) {
@@ -141,7 +146,8 @@ class MenuEditModeState extends MenuState{
                     // store  grid information in an object for reference
                     let gridState = {
                         "startCell": this.stateManager.currentState.canvas.startCell,
-                        "goalCell": this.stateManager.currentState.canvas.goalCell
+                        "goalCell": this.stateManager.currentState.canvas.goalCell,
+                        "gridLines": this.stateManager.currentState.canvas.gridLines
                     }
 
                     let context = {

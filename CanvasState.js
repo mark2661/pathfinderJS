@@ -24,7 +24,6 @@ class CanvasState{
     }
 
     resetCanvas(){
-        // console.log(this.container)
         this.container.removeChild(this.canvas);
         this.createCanvas();
     }
@@ -130,7 +129,9 @@ class CanvasState{
             this.canvas_ctx.fillRect(globalCellTopLeftCoordX, globalCellTopLeftCoordY, settings.grid_cell_width, settings.grid_cell_height);
         }
 
-        this.drawGridLines();
+        if (this.gridLines){
+            this.drawGridLines();
+        }
 
         // only draw display text when cursor is hovering over a grid cell
         if (this.currentHoverCellKey !== null) {
@@ -169,6 +170,10 @@ class CanvasState{
         this.canvas_ctx.fillText(`Mouse Pos: (${this.currentHoverCellKey})`, canvasLeftEdgeOffset, canvasBottomEdgeOffset);
     }
 
+    toggleGridLines(){
+        this.gridLines = !this.gridLines;
+    }
+
     // Override
     setHover(){ return; }
 
@@ -205,6 +210,7 @@ class CanvasState{
         this.startCell = null;
         this.goalCell = null;
         this.previousContext = null;
+        this.gridLines = true;
     }
 
 }
