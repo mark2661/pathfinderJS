@@ -58,7 +58,6 @@ class CanvasState{
 
         let updateOpenAndClosedList = true;
         if (this.isSearchInProgress()){
-            // TODO: clean up this "hacky" solution for assigning "visualisationMode" variable depending on the current state of the application
             let visualisationMode = null;
             if (this.previousContext !== null){
                 visualisationMode = this.previousContext.menuState["visualisation-select"].toLowerCase();

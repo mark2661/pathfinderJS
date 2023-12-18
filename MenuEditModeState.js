@@ -106,7 +106,6 @@ class MenuEditModeState extends MenuState{
                 "id": "run-button",
                 "text": "Run"
             }
-            // TODO: May be able to delete this and use getCurrentContext method in StateManager
             let runOnClickFunction = function () {
                 if (this.stateManager.currentState.canvas.searchSolution === null) {
                     if (this.stateManager.currentState.canvas.startCell === null || this.stateManager.currentState.canvas.goalCell === null) {

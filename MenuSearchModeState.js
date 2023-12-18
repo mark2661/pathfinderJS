@@ -86,7 +86,6 @@ class MenuSearchModeState extends MenuState{
     update(){
         let self = this;
         function updateSearchResultsTable(){
-            // TODO: refactor this function
             for (let element of self.menuElements) {
                 if (element.element.tagName === "TABLE") {
                     const startCell = self.stateManager.currentState.canvas.searchSolution.getStartCell();
