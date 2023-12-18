@@ -34,7 +34,7 @@ class StateManager {
         let config = {
             "actions": [[-1, 0], [0, 1], [1, 0], [0, -1]],
             "actionCost": [1, 1, 1, 1],
-            "strategy": searchAlgorithmSelectElement.value
+            "strategy": (searchAlgorithmSelectElement !== null) ? searchAlgorithmSelectElement.value : null
         }
 
         // store current select menu values in an object for reference
@@ -64,8 +64,9 @@ class StateManager {
         return context;
     }
 
-    switchState(stateKey, currentContext){
+    switchState(stateKey){
         stateKey = stateKey.toLowerCase();
+        let currentContext = this.getCurrentStateContext();
         if (stateKey in this.canvas_states && stateKey in this.menu_states){
             this.currentState.canvas = this.canvas_states[stateKey];
             this.currentState.canvas.init(currentContext);

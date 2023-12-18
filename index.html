@@ -108,7 +108,7 @@
                         stateManager.currentState.canvas.setStartCell(currentMousePos.x, currentMousePos.y);
                         stateManager.currentState.canvas.setGoalCell(currentMousePos.x, currentMousePos.y);
                         // starts search
-                        stateManager.switchState("search", stateManager.getCurrentStateContext());
+                        stateManager.switchState("search");
                     }
                 }
                 else if (isMouseCursorOnCanvas() && isRightMouseButtonDown(event.button)){

@@ -125,37 +125,7 @@ class MenuEditModeState extends MenuState{
                         return;
                     }
 
-                    let searchAlgorithmSelectElement = document.getElementById("search-algorithm-select");
-                    let config = {
-                        "actions": [[-1, 0], [0, 1], [1, 0], [0, -1]],
-                        "actionCost": [1, 1, 1, 1],
-                        "strategy": searchAlgorithmSelectElement.value
-                    }
-
-                    // store current select menu values in an object for reference
-                    let menuState = {};
-                    let selectMenuNodes = Array.prototype.slice.call(document.getElementById("select-menu-container").children).filter((node) =>{
-                        return node.tagName === "SELECT";
-                    });
-
-                    for(let node of selectMenuNodes){
-                        let nodeID = node.id;
-                        menuState[nodeID] = node.value;
-                    }
-
-                    // store  grid information in an object for reference
-                    let gridState = {
-                        "startCell": this.stateManager.currentState.canvas.startCell,
-                        "goalCell": this.stateManager.currentState.canvas.goalCell,
-                        "gridLines": this.stateManager.currentState.canvas.gridLines
-                    }
-
-                    let context = {
-                        "config": config,
-                        "menuState": menuState,
-                        "gridState": gridState,
-                    }
-                    this.stateManager.switchState("search", context);
+                    this.stateManager.switchState("search");
                 }
             }
 
